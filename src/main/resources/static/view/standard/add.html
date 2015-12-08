@@ -1,0 +1,66 @@
+<meta charset="utf-8" />
+
+  	<tr>
+        <td>名称</td>
+        <td><input type="text" name="name" value=""/></td>
+    </tr>
+    <tr>
+        <td>年份</td>
+        <td><input type="text" name="year" value=""/></td>
+    </tr>
+    <tr>
+        <td>地区</td>
+        <td><select ><option>北京</option><option>浙江</option><option>甘肃</option><option>辽宁</option><option>新疆</option></select></td>
+    </tr>
+		    
+	<table class="table table-bordered table-striped" id="table">
+			<thead>
+				<tr>
+					<th>编号</th>
+					<th>项目名称</th>
+					<th>上级项目</th>
+					<th>价格</th>
+					<th>单价</th>
+					<th>定价单位</th>
+				</tr>
+			</thead>
+		
+	 			 <tr >
+		            <td>101</td>
+		            <td>边坡平整</td>
+		            <td></td>
+		            <td><input type="text" name="price" value=""/></td>
+		            <td>元</td>
+		            <td>m³</td>
+	         	</tr>
+		    
+		    	<tr >
+		            <td>102</td>
+		            <td>地貌恢复（果园、耕地、玉米）</td>
+		            <td>地貌恢复</td>
+		            <td><input type="text" name="price" value=""/></td>
+		            <td>元</td>
+		            <td>m³</td>
+	         	</tr>
+	         	<tr >
+		            <td>103</td>
+		            <td>地貌恢复（荒地）</td>
+		            <td>地貌恢复</td>
+		            <td><input type="text" name="price" value=""/></td>
+		            <td>元</td>
+		            <td>m³</td>
+	         	</tr>
+	         	<tr >
+		            <td>104</td>
+		            <td>便道</td>
+		            <td></td>
+		            <td><input type="text" name="price" value=""/></td>
+		            <td>元</td>
+		            <td>m³</td>
+	         	</tr>
+	<table>
+	
+	<center>
+		<button type="submit" class="btn btn-primary" type="button" >保存</button>
+		<button type="button" class="btn btn-success" name="backid" id="backid" ng-click="backMain();">返回列表</button>
+	</center>
