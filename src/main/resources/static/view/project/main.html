@@ -1,4 +1,67 @@
 <meta charset="utf-8" />
+	<tr>
+       <td>公估项目名称：</td>
+       <td><input type="text" name="pname" value=""/></td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	
+       <td>使用标准：</td>
+       <td><input type="text" name="pname" value=""/></td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	
+       <td>地区：</td>
+       <td><input type="text" name="pname" value=""/></td>
+       
+   </tr>
+   <hr></hr>
+   <tr>
+	  <td>
+	  <center>
+            <button type="submit" class="btn btn-primary" type="button">查询</button> 
+            <button type="submit" class="btn btn-primary" type="button">清空</button> 
+            <button type="button" class="btn btn-success" id="newNav" ng-click="goAdd('project/add.html')">新增</button>
+		</center>
+       </td>
+   </tr>
+	 <hr></hr>
 <table class="table table-bordered table-sm" id="table">
-
+<thead class="thead-inverse">
+	<tr>
+		<th>公估项目名称</th>
+		<th>核算日期</th>
+		<th>核算损失金额（元）</th>
+		<th>实际损失金额（元）</th>
+		<th>核算人员</th>
+		<th>操作</th>
+	</tr>
+</thead>
+  		<tr >
+         	<td style="vertical-align:middle;">**公司洪水致损</td>
+            <td style="vertical-align:middle;">2012-08-11</td>
+            <td style="vertical-align:middle;">30000</td>
+            <td style="vertical-align:middle;">35000</td>
+            <td style="vertical-align:middle;">小明</td>
+            <td style="vertical-align:middle;"><a ng-click="goDetail('project/edit.html')" href="javascript:void(0);">详情>>></a></td>
+         </tr>
+         <tr >
+         	<td style="vertical-align:middle;">**公司地震致损</td>
+            <td style="vertical-align:middle;">2013-04-24</td>
+            <td style="vertical-align:middle;">130000</td>
+            <td style="vertical-align:middle;">26000</td>
+            <td style="vertical-align:middle;">小红</td>
+            <td style="vertical-align:middle;"><a ng-click="goDetail('project/edit.html')" href="javascript:void(0);">详情>>></a></td>
+         </tr>
+         <tr >
+         	<td style="vertical-align:middle;">**公司火灾致损</td>
+            <td style="vertical-align:middle;">2014-11-01</td>
+            <td style="vertical-align:middle;">310000</td>
+            <td style="vertical-align:middle;">350000</td>
+            <td style="vertical-align:middle;">小光</td>
+            <td style="vertical-align:middle;"><a ng-click="goDetail('project/edit.html')" href="javascript:void(0);">详情>>></a></td>
+         </tr>
+         <tr >
+         	<td style="vertical-align:middle;">**公司冰雹致损</td>
+            <td style="vertical-align:middle;">2015-09-30</td>
+            <td style="vertical-align:middle;">11000</td>
+            <td style="vertical-align:middle;">16000</td>
+            <td style="vertical-align:middle;">小亮</td>
+            <td style="vertical-align:middle;"><a ng-click="goDetail('project/edit.html')" href="javascript:void(0);">详情>>></a></td>
+         </tr>
 <table>
