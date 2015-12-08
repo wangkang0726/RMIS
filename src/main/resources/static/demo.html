@@ -17,9 +17,13 @@
 	  <a href="javascript:void(0);" data-ng-click="changeMenu(item)" class="list-group-item" data-ng-repeat="item in menu">{{item.name}}</a>
 	</div>
 </div>
-<div class="col-sm-9">
-	<div ng-include="url"></div>
+<div class="col-sm-9" class="main">
+	<div ng-include="mainUrl"></div>
 </div>
+<div class="col-sm-9" class="second page">
+	<div ng-include="secondUrl"></div>
+</div>
+
 </div>
 <script src="js/jquery-2.1.4.js"></script>
 <script src="js/angular.js"></script>

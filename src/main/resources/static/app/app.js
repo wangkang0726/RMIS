@@ -1,17 +1,18 @@
 var rmis = angular.module("rmis",[]);
 rmis.controller("mainCtrl",function($scope, $http){
+	$scope.curr = 'main';
 	$http.get("/menus").success(function(data){
 		$scope.menu = data;
 	});
-	$scope.url = "view/welcome.html"
+	$scope.mainUrl = "view/welcome.html"
 		
 	//
 	$scope.changeMenu = function(item){
-		$scope.url = "view/"+item.url;
+		$scope.mainUrl = "view/"+item.url;
 	}
 	
 	$scope.goDetail = function(url){
-		alert(url);
-		$scope.url = "view/"+url
+		$scope.curr = 'second';
+		$scope.secondUrl = "view/"+url
 	}
 });
