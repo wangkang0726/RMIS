@@ -9,4 +9,9 @@ rmis.controller("mainCtrl",function($scope, $http){
 	$scope.changeMenu = function(item){
 		$scope.url = "view/"+item.url;
 	}
+	
+	$scope.goDetail = function(url){
+		alert(url);
+		$scope.url = "view/"+url
+	}
 });
