@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Axis Rescaling</title>
+    <link rel="stylesheet" href="../css/bootstrap.css" type="text/css" />
+    <script type="text/javascript" src="../js/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/d3.js"></script>
+    <script type="text/javascript" src="../js/angular.js"></script>
+    <style>
+	svg rect:hover{
+		cursor:pointer;
+	}
+	svg text:hover{
+		cursor:pointer;
+	}
+	
+    </style>
+</head>
+<body class="container" data-ng-app="ahp">
+	<div data-ng-controller="ahpCtrl">
+		<ul class="nav nav-tabs" role="tablist">
+			<li class="nav-item">
+				<a class="nav-link active" href="#chart" role="tab" data-toggle="tab">图</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#settings" role="tab" data-toggle="tab">编辑</a>
+			</li>
+		</ul>
+		<div class="tab-content row">
+			<div role="tabpanel" class="tab-pane active col-xm-12" id="chart" ng-include="'ahp_chart.html'"></div>
+			<div role="tabpanel" class="tab-pane" id="settings" ng-include="'ahp_settings.html'"></div>
+		</div>
+	</div>
+	<!-- Modal -->
+<script>
+
+var ahp = angular.module("ahp",[]);
+ahp.controller("ahpCtrl", function($scope){
+	$scope.model={
+			problem:{name:'选择旅游地'},
+			criterion:[{name:"景色",children:[{name:"景色1-1"},{name:"景色1-2"}]},{name:"费用"},{name:"居住"},{name:"饮食"},{name:"旅途"}],
+			alternative:[{name:"桂林"},{name:"黄山"},{name:"北戴河"}]
+	}
+});
+ahp.directive("ahpChart", function(){
+	var totalHeight=0;
+	function setup(svg, para){
+		for(var i = 0;  i < para.length; i++){
+			para[i].text = svg.append("text").text(para[i].name);
+			para[i].w = para[i].text[0][0].getBBox().width;
+			para[i].h = para[i].text[0][0].getBBox().height;
+			para[i].lay = para.lay?para.lay+1:0;
+			if(para[i].children){
+				setup(svg,para[i].children);
+			}
+		}
+
+	}
+	//var criterionLay = new Array();
+	function initLay(para,model){
+		model.criterionLay = new Array();
+		for(var i = 0;  i < para.length; i++){
+			if(!model.criterionLay[para[i].lay]){
+				model.criterionLay[para[i].lay] = new Array();
+			}
+			model.criterionLay[para[i].lay].push(para[i])
+			if(para[i].children){
+				initLay(para[i].children,model);
+			}
+		}
+
+	}
+	function getCount(para){
+		
+			if(!para.children || para.children.length == 0){
+				return 1;
+			} else {
+				var total = 0;
+				for(var i = 0;  i < para.children.length; i++){
+					total += getCount(para.children[i]);
+				}
+				return total;
+			}
+	}
+	
+	function paint(criterion,height){
+		var arr = new Array();
+		for(var i = 0; i < criterion.length; i++){
+			arr.push(getCount(criterion[i]));
+		}
+	}
+
+	function link(scope,el,attr){
+		model = scope.data;
+		$("#chart").empty();
+		var width=$("#chart").width(),
+			height=0,
+			paddingTop = 40,
+			rectHeight = 40,
+			rx=5,
+			ry=5;
+
+		height = paddingTop;
+		svg = d3.select("#chart")
+			.append("svg")
+			.attr("width",width)
+			.attr("height",400);
+		
+		if(model.problem.name){
+			model.problem.text=svg.append("text").text(model.problem.name);
+			model.problem.w = model.problem.text[0][0].getBBox().width;
+			model.problem.h = model.problem.text[0][0].getBBox().height;
+			
+			setup(svg,model.criterion);
+			setup(svg,model.alternative);//alternative
+			
+			initLay(model.criterion,model);//必须在setup之后
+			
+			for(var i = 0; i < model.criterionLay.length; i++){//循环每一层
+				var lay = model.criterionLay[i];
+				var max = 0;
+				for(var j = 0; j < lay.length; j++){//
+					if(lay[j].w > max){
+						max = lay[j].w;
+					}
+				}
+				for(var j = 0; j < lay.length; j++){//
+					lay[j].max = max;//高度等于本行最长文本的长度
+					/*var rect = svg.append("rect");
+					rect.attr("x",(width/lay.length)*j)
+						.attr("y",j*50)
+						.attr("width",100)
+						.attr("height",lay[j].w)
+						.attr("fill","#abc");*/
+				}
+			}
+			
+			
+			//画目标层
+			var rect = svg.append("rect");
+			var text = svg.append("text").text(model.problem.name);
+			var w = text[0][0].getBBox().width;
+			var h = text[0][0].getBBox().height;
+			height += h;
+			rect.attr("x",(width-(w))/2)
+				.attr("y",paddingTop)
+				.attr("width",w)
+				.attr("height",rectHeight)
+				.attr("fill","#abc")
+				.attr("rx",rx)
+				.attr("ry",ry);
+				
+			text.attr("x",(width-w)/2)
+				.attr("y",(rectHeight+h)/2+paddingTop-4);
+			
+			//画准则层
+			paint(model.criterion,height+50);//50是层与层之间的距离
+
+		}
+		
+		if(model.criterion.length > 0){
+			var counter = width/model.criterion.length;
+		}
+		
+		for(var i = 0;  i < model.criterion.length; i++){
+			model.criterion[i].name;
+		}
+	}
+	
+	return {
+		link: link,
+		restrict: 'E',
+		scope: {data: '='}
+	}
+});
+/*
+var model={
+		problem:{name:'选择旅游地'},
+		criterion:[],
+		alternative:[]		
+}
+function initModal(){
+	$("#button").show();
+	$("#detail").hide();
+	$("#footer").hide();
+	$("#problem").val("");
+}
+$(function(){
+	$("#addpro").click(function(){
+		$("#button").toggle();
+		$("#detail").toggle();
+		$("#footer").toggle();
+	});
+	$("#name .add").click(function(){
+		var type = $("#name").attr("data-type");
+		if(type == 0){
+			model.criterion.push();
+		}
+		$("#name").modal("hide");
+	});
+	$("#name .save").click(function(){
+		var type = $("#name").attr("data-type");
+		if(type==0){//problem
+			model.problem.name=$("#txt").val();
+		}
+		$("#name").modal("hide");
+		render();
+	});
+	$("#problem").focus(function(){
+		$("#detail").removeClass();
+		$("#detail").addClass("form-group text-left");
+		$("#problem").removeClass();
+		$("#problem").addClass("form-control");
+	})
+	
+	//svg
+	var svg;
+	
+	function render(){
+		$("#canvas").empty();
+		var width=$("#canvas").width(),height=600;
+		svg = d3.select("body .canvas")
+			.append("svg")
+			.attr("width",width)
+			.attr("height",height);
+		if(model.problem.name){
+			var g = svg.append("g");
+			var rect = g.append("rect");
+			var text = g.append("text").text(model.problem.name);
+			var w = text[0][0].getBBox().width;
+			var h = text[0][0].getBBox().height;
+			rect.attr("x",(width-(w))/2)
+				.attr("y",20)
+				.attr("width",w)
+				.attr("height",40)
+				.attr("fill","#abc")
+				.attr("rx",5)
+				.attr("ry",5)
+				.on("click",function(){
+					$("#edit").attr("data-type",0);
+					$("#editLabel input").val(model.problem.name);
+					$("#edit").modal("show");
+				});
+				
+			text.attr("x",(width-w)/2)
+				.attr("y",(40+h)/2+20-4)
+				.on("click",function(){
+					$("#edit").attr("data-type",0);
+					$("#editLabel input").val(model.problem.name);
+					$("#edit").modal("show");
+				});
+
+		}
+		
+	}
+	//render();
+	//svg end
+	
+});*/
+
+
+
+
+</script>

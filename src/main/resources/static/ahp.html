@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Axis Rescaling</title>
+    <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="css/styles.css"/>
+    <script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/d3.js"></script>
+    <style>
+    	body{
+    		background-color:#f8f8f8;
+    	}
+    	.canvas{
+    		background-color:#fff;
+    	}
+    	.node{
+    		border:1px solid #abc;
+    		width:100%;
+    		height:10px;
+    	}
+    </style>
+</head>
+
+<body class="container">
+	<div class="row">
+		<div class="canvas col-xs-12" id="canvas" style="border:1px solid #abc;"></div>
+		<!-- <div class="col-xs-3 col-xs-offset-9" style="position: fixed;">
+			<div class="row">
+				<h3>组件</h3>
+			</div>
+			<div class="row">
+				Nav tabs
+				<ul class="nav nav-tabs">
+					<li class="nav-item nav-link active">
+						<a href="#">属性</a>
+					</li>
+				</ul>
+
+			</div>
+		</div> -->
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label>
+						<span aria-hidden="true">&times;</span>
+						<span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id=myModalLabel>Modal title</h4>
+				</div>
+				<div class="modal-body">
+				......
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save Changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript">
+    var height = $("#canvas").width(), 
+        width = $("#canvas").width(), 
+        margin = 25,
+        xAxis, yAxis, xAxisLength, yAxisLength;
+    
+    var svg = d3.select("body .canvas").append("svg")     
+            .attr("class", "axis")    
+            .attr("width", width)
+            .attr("height", height);
+    
+    svg.on("click",function(){
+    	$('#myModal').modal('show');
+    })
+    
+    function renderXAxis(){
+        xAxisLength = width - 2 * margin;
+    
+        var scale = d3.scale.linear()
+                        .domain([0, 1000])
+                        .range([0, xAxisLength]);
+        
+        xAxis = d3.svg.axis()
+                .scale(scale)
+                .tickSubdivide(1)
+                .orient("top");
+                
+        svg.append("g")       
+            .attr("class", "x-axis")
+            .attr("transform", function(){ 
+                return "translate(" + margin + "," + (margin) + ")";
+            })
+            .call(xAxis);
+    }
+    
+    function renderYAxis(){        
+        yAxisLength = height - 2 * margin;
+    
+        var scale = d3.scale.linear()
+                        .domain([1000, 0])
+                        .range([0, yAxisLength]);
+    
+        yAxis = d3.svg.axis()
+                .scale(scale)
+                .tickValues([1, 2, 3, 40, 500, 600, 700, 800, 910, 1000])
+                .orient("left");
+            
+        svg.append("g")       
+            .attr("class", "y-axis")
+            .attr("transform", function(){
+                return "translate(" + margin + "," + margin + ")";
+            })
+            .call(yAxis);
+    }   
+            
+    function rescale(){ // <-A
+        var max = Math.round(Math.random() * 100);
+        
+        xAxis.scale().domain([0, max]); // <-B
+        svg.select("g.x-axis")
+            .transition()
+            .call(xAxis); // <-C
+            
+        yAxis.scale().domain([max, 0]);
+        svg.select("g.y-axis")
+            .transition()
+            .call(yAxis);
+        
+        renderXGridlines();
+        renderYGridlines();
+    }       
+    
+    function renderXGridlines(){
+        var lines = d3.selectAll("g.x-axis g.tick")
+                .select("line.grid-line")
+                .remove(); // <-D
+                
+        lines = d3.selectAll("g.x-axis g.tick")
+                .append("line") 
+                .classed("grid-line", true)
+
+        lines.attr("x1", 0) 
+                .attr("y1", 0)
+                .attr("x2", 0)
+                .attr("y2",  yAxisLength); 
+    }
+    
+    function renderYGridlines(){
+        var lines = d3.selectAll("g.y-axis g.tick")
+                .select("line.grid-line").remove(); 
+        
+        lines = d3.selectAll("g.y-axis g.tick")
+                .append("line") 
+                .classed("grid-line", true)
+                
+        lines.attr("x1", 0)
+            .attr("y1", 0)
+            .attr("x2", xAxisLength)
+            .attr("y2", 0);
+    }
+    
+    renderYAxis();
+    renderXAxis();
+    renderXGridlines();
+    renderYGridlines();
+</script>
+<!-- 
+<div class="control-group">
+    <button onclick="rescale()">ReScale</button>
+</div> -->
+
+</body>
+
+</html>

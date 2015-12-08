@@ -1,0 +1,52 @@
+<meta charset="utf-8" />
+<table class="table table-bordered table-striped" id="table">
+<thead>
+	<tr>
+		<th>编号</th>
+		<th>项目名称</th>
+		<th>上级项目</th>
+		<th>单价</th>
+		<th>定价单位</th>
+	</tr>
+</thead>
+<tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+<table>
+<div id="edit" style="display:none;">
+这是一颗树
+</div>
+<button id="editBtn" onclick="" class="btn btn-primary">编辑</button>
+<button id="saveBtn" onclick="$('#edit').show();$('#table').hide()" class="btn btn-primary" style="display:none;">保存</button>
+
+<script>
+	$(function(){
+		$("#editBtn").click(function(){
+			$('#edit').show();
+			$('#saveBtn').show();
+			$('#table').hide();
+			$('#editBtn').hide();
+		});
+		$("#saveBtn").click(function(){
+			$('#edit').hide();
+			$('#saveBtn').hide();
+			$('#table').show();
+			$('#editBtn').show();
+
+			
+			$.ajax({url:"/items",
+				type:'POST',
+				data: JSON.stringify({description:'描述信息',property:'prop'}),
+				contentType: "application/json",
+				dataType: 'json',
+				success:function(data){
+					alert(data)
+				}
+			});
+			
+			
+		});
+	});
+</script>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Axis Rescaling</title>
+    <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+    <script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/d3.js"></script>
+    <style>
+	svg rect:hover{
+		cursor:pointer;
+	}
+	svg text:hover{
+		cursor:pointer;
+	}
+	
+    </style>
+</head>
+<body class="container">
+	<div class="row">
+		<div class="canvas col-xs-12" id="canvas" style="border:1px solid #abc;"></div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+
+				<div class="modal-body text-center">
+					<div id="button">
+						<button class="btn btn-primary-outline" id="addpro">新增目标</button>
+						<button class="btn btn-primary-outline" id="addcri">新增方案</button>
+					</div>
+					<!-- <div id="detail" style="display:none;">
+						<input type="text" class="form-control" placeholder="请输入目标名称">
+					</div> -->
+					<!-- <div class="form-group has-warning">
+					  <label class="control-label" for="inputWarning1">Input with warning</label>
+					  <input type="text" class="form-control form-control-warning" id="inputWarning1">
+					</div> -->
+					<div class="form-group text-left" id="detail" style="display:none;">
+						<label class="control-label" for="problem">目标名称</label>
+						<input type="text" class="form-control" id="problem" placeholder="请输入目标名称">
+					</div>
+				</div>
+				<div class="modal-footer" style="display:none;" id="footer">
+					<button class="btn btn-secondary-outline" id="cancel">取消</button>
+					<button class="btn btn-primary-outline" id="save">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="name" tabindex="-1" role="dialog" aria-labelledby="criterionLabel" aria-hidden="true" data-type="0">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-body text-center">
+					<div class="form-group text-left">
+						<label class="control-label" for="txt">名称</label>
+						<input type="text" class="form-control" name="txt" id="txt" placeholder="请输入名称">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-warning-outline add">新增准则</button>
+					<button class="btn btn-primary-outline save">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="editLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						<span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="editLabel">
+						<input>
+					</h4>
+				</div>
+				<div class="modal-body">
+					准则
+					<div class="list-group">
+						<a href class="list-group-item">sdfas <span class="badge">14</span></a>
+						<a href="javascript:void(0)" class="list-group-item">sdfasd<span class="badge pull-right">&times;</span></a>
+						<a href class="list-group-item">sdfsdf</a>
+						<a href class="list-group-item">sdfasd</a>
+					</div>
+					<br>
+					<div class="input-group">
+						<input type="text" class="form-control">
+						<span class="input-group-btn">
+							<button class="btn btn-secondary" type="button">添加</button>
+						</span>
+					</div>
+					<hr>
+					<div class="panel panel-default">
+						<div class="alert alert-info" role="alert">方案</div>
+						<div class="panel-body">
+							<button class="btn btn-info">方案一</button>
+							<button class="btn btn-info">方案二</button>
+							<button class="btn btn-info">方案三</button>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary-outline" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary-outline">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+<script>
+
+var model={
+		problem:{name:'选择旅游地'},
+		criterion:[],
+		alternative:[]		
+}
+function initModal(){
+	$("#button").show();
+	$("#detail").hide();
+	$("#footer").hide();
+	$("#problem").val("");
+}
+$(function(){
+	$("#addpro").click(function(){
+		$("#button").toggle();
+		$("#detail").toggle();
+		$("#footer").toggle();
+	});
+	$("#name .add").click(function(){
+		var type = $("#name").attr("data-type");
+		if(type == 0){
+			model.criterion.push();
+		}
+		$("#name").modal("hide");
+	});
+	$("#name .save").click(function(){
+		var type = $("#name").attr("data-type");
+		if(type==0){//problem
+			model.problem.name=$("#txt").val();
+		}
+		$("#name").modal("hide");
+		render();
+	});
+	$("#problem").focus(function(){
+		$("#detail").removeClass();
+		$("#detail").addClass("form-group text-left");
+		$("#problem").removeClass();
+		$("#problem").addClass("form-control");
+	})
+	
+	//svg
+	var svg;
+	
+	function render(){
+		$("#canvas").empty();
+		var width=$("#canvas").width(),height=600;
+		svg = d3.select("body .canvas")
+			.append("svg")
+			.attr("width",width)
+			.attr("height",height);
+		if(model.problem.name){
+			var g = svg.append("g");
+			var rect = g.append("rect");
+			var text = g.append("text").text(model.problem.name);
+			var w = text[0][0].getBBox().width;
+			var h = text[0][0].getBBox().height;
+			rect.attr("x",(width-(w))/2)
+				.attr("y",20)
+				.attr("width",w)
+				.attr("height",40)
+				.attr("fill","#abc")
+				.attr("rx",5)
+				.attr("ry",5)
+				.on("click",function(){
+					$("#edit").attr("data-type",0);
+					$("#editLabel input").val(model.problem.name);
+					$("#edit").modal("show");
+				});
+				
+			text.attr("x",(width-w)/2)
+				.attr("y",(40+h)/2+20-4)
+				.on("click",function(){
+					$("#edit").attr("data-type",0);
+					$("#editLabel input").val(model.problem.name);
+					$("#edit").modal("show");
+				});
+
+		}
+		
+	}
+	render();
+	//svg end
+});
+
+
+
+
+</script>

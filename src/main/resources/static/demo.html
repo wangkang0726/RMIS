@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-ng-app="rmis">
+<head>
+  <meta charset="utf-8" />
+  <title>风险数据库二期</title>
+  <meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+</head>
+<body class="container-fluid" data-ng-controller="mainCtrl">
+<div class="row">
+<div class="col-sm-3">
+	<div class="list-group">
+	  <a href="#" class="list-group-item disabled">
+	    公估定额标准库
+	  </a>
+	  <a href="javascript:void(0);" data-ng-click="changeMenu(item)" class="list-group-item" data-ng-repeat="item in menu">{{item.name}}</a>
+	</div>
+</div>
+<div class="col-sm-9">
+	<div ng-include="url"></div>
+</div>
+</div>
+<script src="js/jquery-2.1.4.js"></script>
+<script src="js/angular.js"></script>
+<script src="app/app.js"></script>
+</body>
+</html>
