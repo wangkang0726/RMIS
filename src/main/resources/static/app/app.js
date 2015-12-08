@@ -1,6 +1,6 @@
 var rmis = angular.module("rmis",[]);
 rmis.controller("mainCtrl",function($scope, $http){
-	$scope.curr = 'main';
+	$scope.main = true;
 	$http.get("/menus").success(function(data){
 		$scope.menu = data;
 	});
@@ -12,7 +12,7 @@ rmis.controller("mainCtrl",function($scope, $http){
 	}
 	
 	$scope.goDetail = function(url){
-		$scope.curr = 'second';
+		$scope.main = false;
 		$scope.secondUrl = "view/"+url
 	}
 });
