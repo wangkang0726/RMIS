@@ -8,7 +8,13 @@
   <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
 </head>
 <body class="container-fluid" data-ng-controller="mainCtrl">
-<div class="row">
+<nav class="navbar navbar-dark bg-primary">
+  <a class="navbar-brand" href="#">风险信息管理系统</a>
+  
+</nav>
+
+
+<div class="row" style="margin-top:10px;">
 <div class="col-sm-3">
 	<div class="list-group">
 	  <a href="#" class="list-group-item disabled">
@@ -18,9 +24,17 @@
 	</div>
 </div>
 <div class="col-sm-9" class="main" ng-show="main">
+	<ol class="breadcrumb">
+	  <li><a href="#">主页</a></li>
+	  <li class="active">{{curr.name}}</li>
+	</ol>
 	<div ng-include="mainUrl"></div>
 </div>
 <div class="col-sm-9" class="second" ng-show="!main">
+	<ol class="breadcrumb">
+	  <li><a href="#">主页</a></li>
+	  <li class="active">{{curr.name}}</li>
+	</ol>
 	<div ng-include="secondUrl"></div>
 </div>
 

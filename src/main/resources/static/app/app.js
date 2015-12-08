@@ -3,11 +3,14 @@ rmis.controller("mainCtrl",function($scope, $http){
 	$scope.main = true;
 	$http.get("/menus").success(function(data){
 		$scope.menu = data;
+		$scope.curr = data[0];
+		$scope.mainUrl = "view/"+$scope.curr.url;
 	});
-	$scope.mainUrl = "view/welcome.html"
 		
 	//
 	$scope.changeMenu = function(item){
+		$scope.main = true;
+		$scope.curr = item;
 		$scope.mainUrl = "view/"+item.url;
 	}
 	
