@@ -15,4 +15,7 @@ rmis.controller("mainCtrl",function($scope, $http){
 		$scope.main = false;
 		$scope.secondUrl = "view/"+url
 	}
+	$scope.backMain = function(){
+		$scope.main = true;
+	}
 });
