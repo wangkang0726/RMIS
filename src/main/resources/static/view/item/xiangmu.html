@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta charset="UTF-8">
+
+<!-- zTree -->
+<!-- <link rel="stylesheet" href="../../zTree/css/demo.css" type="text/css"> -->
+<link rel="stylesheet" href="../../zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="../../js/jquery-2.1.4.js"></script>
+<script type="text/javascript" src="../../zTree/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../zTree/js/jquery.ztree.excheck-3.5.js"></script>
+<script type="text/javascript" src="../../zTree/js/jquery.ztree.exedit-3.5.js"></script>
+
+<style type="text/css">
+body {
+	padding-bottom: 400px;
+}
+</style>
+
+<style> 
+.div-a{ float:left;width:39%;} 
+.div-b{ float:left;width:59%;} 
+</style> 
+
+<script type="text/javascript">
+	var currNode = null;
+	$(function() {
+		$(".content-span-1").on("click", function() {
+			$('#contentZw').show();
+			$('#contentGs').hide();
+		});
+		$(".content-span-2").on("click", function() {
+			$('#contentZw').hide();
+			$('#contentGs').show();
+		});
+	});
+
+	function zTreeOnClick(event, treeId, treeNode) {
+	    //alert(treeNode.tId + ", " + treeNode.name);
+	    currNode = treeNode;
+	   document.getElementById("name").value = treeNode.name;
+
+	};
+	
+
+	
+</script>
+</head>
+<body>
+	<div class="content">
+
+		<div class="appli-content-title" id="contentLi">
+			<span class="content-span-1 on">查看</span> <span
+				class="content-span-2">编辑</span>
+		</div>
+			<!-- 查看 -->
+		<div class="appli-content" id="" style="margin: 10px">
+			<div class="appli-content-zw" id="contentZw">
+				<table >
+					<thead>
+						<tr>
+							<th>编号</th>
+							<th>项目名称</th>
+							<th>上级项目</th>
+							<th>单价</th>
+							<th>定价单位</th>
+						</tr>
+					</thead>
+					
+					<tr>
+						<td>101</td>
+						<td>边坡平整</td>
+						<td></td>
+						<td>元</td>
+						<td>m³</td>
+					</tr>
+					
+				</table>
+
+			</div>
+
+
+	
+
+			<div class="appli-content-gs" id="contentGs" style="display: none;">
+				
+				<div class="appli-content-gs-title">
+					<!-- 编辑  zTree-->
+
+					
+						<div class="div-a">
+							<ul id="treeDemo" class="ztree"></ul>
+						</div>
+
+							<div class="div-b">
+							
+							
+							<table>
+								 <tr>
+							        <td>名 称:</td>
+							        <td><input id="name" type="text" name="name" value=''/></td>
+							    </tr>
+							    
+							    <tr>
+							        <td>单 位:</td>
+							        <td><input type="text" name="moneyType" id="moneyType" value="元"/></td>
+							    </tr>
+							   
+							    <tr>
+							        <td>定价单位:</td>
+							        <td><select name="numeraire" id="numeraire">
+							        	<option value="1">m³</option>
+							        	<option value="2">㎡</option>
+							        	<option value="3">m</option>
+							        	<option value="4">个</option>
+							        	<option value="5">根</option>
+							        	<option value="6">吨</option>
+							        	</select>
+							        </td>
+							    </tr>
+							    
+						    </table>
+						    
+							<button id="save">保存</button>
+							<button id="addLeaf">新增</button>
+							<button id="remove">删除</button>
+						    </div>
+						    
+				</div>
+
+			</div>
+
+		
+		</div>
+	</div>
+
+
+
+	<SCRIPT type="text/javascript">
+		var setting = {
+			view : {
+				selectedMulti : false
+			},
+			edit : {
+				enable : true,
+				showRemoveBtn : false,
+				showRenameBtn : false
+			},
+			data : {
+				keep : {
+					parent : true,
+					leaf : true
+				},
+				simpleData : {
+					enable : true
+				}
+			},
+			callback : {
+				onRemove : onRemove
+			},
+			callback: {
+				onClick: zTreeOnClick
+			}
+		};
+	
+		var log, className = "dark";
+		function onRemove(e, treeId, treeNode) {
+
+		}
+		function beforeRename(treeId, treeNode, newName) {
+			if (newName.length == 0) {
+				alert("节点名称不能为空.");
+				var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+				setTimeout(function() {
+					zTree.editName(treeNode)
+				}, 10);
+				return false;
+			}
+			return true;
+		}
+
+
+		var newCount = 1;
+		function add(e) {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo"), isParent = e.data.isParent, nodes = zTree
+					.getSelectedNodes(), treeNode = nodes[0];
+			if (treeNode) {
+				treeNode = zTree.addNodes(treeNode, {
+					id : (100 + newCount),
+					pId : treeNode.id,
+					isParent : isParent,
+					name : "new node" + (newCount++)
+				});
+			} else {
+				treeNode = zTree.addNodes(null, {
+					id : (100 + newCount),
+					pId : 0,
+					isParent : isParent,
+					name : "new node" + (newCount++)
+				});
+			}
+			if (treeNode) {
+				zTree.editName(treeNode[0]);
+			} else {
+				alert("叶子节点被锁定，无法增加子节点");
+			}
+			
+			top.window.iFrameHeight();
+		}
+		function edit() {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo"), nodes = zTree
+					.getSelectedNodes(), treeNode = nodes[0];
+			if (nodes.length == 0) {
+				alert("请先选择一个节点");
+				return;
+			}
+			zTree.editName(treeNode);
+		}
+		function remove(e) {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo"), nodes = zTree
+					.getSelectedNodes(), treeNode = nodes[0];
+			if (nodes.length == 0) {
+				alert("请先选择一个节点");
+				return;
+			}
+			var callbackFlag = $("#callbackTrigger").attr("checked");
+			zTree.removeNode(treeNode, callbackFlag);
+		}
+		function clearChildren(e) {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo"), nodes = zTree
+					.getSelectedNodes(), treeNode = nodes[0];
+			if (nodes.length == 0 || !nodes[0].isParent) {
+				alert("请先选择一个父节点");
+				return;
+			}
+			zTree.removeChildNodes(treeNode);
+		}
+		
+		var zNodes = new Array();
+		zNodes.push({
+			id : 0,
+			pId : -1,
+			name : "项目",
+			open : true,
+			isParent : true
+		});
+		function reload(){
+			if(zNodes.length > 1)zNodes.splice(1,zNodes.length);
+			$.get("/items",function(data){
+				for(var i = 0; i < data.length; i++){
+					var tmp = {};
+					tmp.id = data[i].id;
+					tmp.pId = data[i].parent;
+					tmp.name=data[i].name;
+					tmp.open = true;
+					if(data[i].parent == 0){
+						tmp.isParent = true;
+					} else {
+						tmp.isParent = false;
+					}
+					zNodes.push(tmp);
+				}
+				
+				//
+				
+				//
+				$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+				$("#addParent").bind("click", {
+					isParent : true
+				}, add);
+				$("#addLeaf").bind("click", {
+					isParent : false
+				}, add);
+				$("#edit").bind("click", edit);
+				$("#remove").bind("click", remove);
+				$("#clearChildren").bind("click", clearChildren);
+			});
+			
+		}
+		
+		reload();
+			
+			//
+			$("#save").click(function(){
+				$.ajax({url:"/items",
+					type:'POST',
+					data: JSON.stringify({name:$("#name").val(),moneyType:$("#moneyType").val(),numeraire:$("#numeraire").val(),parent:currNode.id}),
+					contentType: "application/json",
+					dataType: 'json',
+					success:function(data){
+						alert("保存成功！");
+						reload();
+					},
+				    error: function(xhr, type){
+				        alert('数据保存失败');
+				    }
+				});
+			});			
+		
+			
+		
+		
+
+	</SCRIPT>
+</body>
+</html>
+

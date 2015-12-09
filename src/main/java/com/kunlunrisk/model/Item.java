@@ -7,48 +7,70 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.GenericGenerator;
 
-@Entity
+@Entity(name="T_ITEM")
 public class Item {
   @Id
   @GeneratedValue(generator = "custom-id")
   @GenericGenerator(name = "custom-id", strategy = "increment")
   private Integer id;
-  @Column
-  private boolean checked;
+ 
   @Column
   private String description;
+//@Column
+//private String property;
   @Column
-  private String property;
+  private String NO;//编号
+  @Column
+  private String name;//项目名称
+  @Column
+  private String parent;//上级项目
+  @Column
+  private String moneyType;//单价单位
+  @Column
+  private String numeraire;//记账单位，定价单位
+  
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getParent() {
+		return parent;
+	}
+	public void setParent(String parent) {
+		this.parent = parent;
+	}
+	public String getMoneyType() {
+		return moneyType;
+	}
+	public void setMoneyType(String moneyType) {
+		this.moneyType = moneyType;
+	}
+	public String getNumeraire() {
+		return numeraire;
+	}
+	public void setNumeraire(String numeraire) {
+		this.numeraire = numeraire;
+	}
+	public String getNO() {
+		return NO;
+	}
+	public void setNO(String nO) {
+		NO = nO;
+	}
 
-  public String getProperty() {
-	return property;
-  }
-
-  public void setProperty(String property) {
-	this.property = property;
-}
-
-public Integer getId() {
-    return id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public boolean isChecked() {
-    return checked;
-  }
-
-  public void setChecked(boolean checked) {
-    this.checked = checked;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
+  
 }
