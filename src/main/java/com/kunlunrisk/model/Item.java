@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -23,54 +25,62 @@ public class Item {
   @Column
   private String name;//项目名称
   @Column
-  private String parent;//上级项目
+  private Integer parent;//上级项目
+  @Column
+  private String parentName;//单价单位
   @Column
   private String moneyType;//单价单位
   @Column
   private String numeraire;//记账单位，定价单位
+public Integer getId() {
+	return id;
+}
+public void setId(Integer id) {
+	this.id = id;
+}
+public String getDescription() {
+	return description;
+}
+public void setDescription(String description) {
+	this.description = description;
+}
+public String getNO() {
+	return NO;
+}
+public void setNO(String nO) {
+	NO = nO;
+}
+public String getName() {
+	return name;
+}
+public void setName(String name) {
+	this.name = name;
+}
+public Integer getParent() {
+	return parent;
+}
+public void setParent(Integer parent) {
+	this.parent = parent;
+}
+public String getParentName() {
+	return parentName;
+}
+public void setParentName(String parentName) {
+	this.parentName = parentName;
+}
+public String getMoneyType() {
+	return moneyType;
+}
+public void setMoneyType(String moneyType) {
+	this.moneyType = moneyType;
+}
+public String getNumeraire() {
+	return numeraire;
+}
+public void setNumeraire(String numeraire) {
+	this.numeraire = numeraire;
+}
   
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getParent() {
-		return parent;
-	}
-	public void setParent(String parent) {
-		this.parent = parent;
-	}
-	public String getMoneyType() {
-		return moneyType;
-	}
-	public void setMoneyType(String moneyType) {
-		this.moneyType = moneyType;
-	}
-	public String getNumeraire() {
-		return numeraire;
-	}
-	public void setNumeraire(String numeraire) {
-		this.numeraire = numeraire;
-	}
-	public String getNO() {
-		return NO;
-	}
-	public void setNO(String nO) {
-		NO = nO;
-	}
-
+	
   
 }
