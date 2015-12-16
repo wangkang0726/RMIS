@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import org.hibernate.annotations.GenericGenerator;
-@Entity(name="T_STANDARDITEM")
+@Entity(name="T_STANDARD_ITEM")
 public class StandardItem {
 
 	  @Id
@@ -14,8 +14,15 @@ public class StandardItem {
 	  @GenericGenerator(name = "custom-id", strategy = "increment")
 	  private Integer id;
 	  @Column
-	  private Integer itemId;
-	  @Column
+	  private Integer standardId;
+	  
+	  public Integer getStandardId() {
+		return standardId;
+	}
+	public void setStandardId(Integer standardId) {
+		this.standardId = standardId;
+	}
+	@Column
 	  private Double price;  //价格
 	  
 	  
@@ -26,12 +33,6 @@ public class StandardItem {
 	}
 	public void setId(Integer id) {
 		this.id = id;
-	}
-	public Integer getItemId() {
-		return itemId;
-	}
-	public void setItemId(Integer itemId) {
-		this.itemId = itemId;
 	}
 	public Double getPrice() {
 		return price;
