@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 @Entity(name="T_STANDARD_ITEM")
@@ -17,11 +18,9 @@ public class StandardItem {
 	  private Integer standardId;
 	  @Column
 	  private Double price;  //价格
-	  @Column
-	  private Long areaId;
-	  
-	  
-	  
+	  @ManyToOne
+	  private Item item;
+  
 	public Integer getId() {
 		return id;
 	}
@@ -34,17 +33,17 @@ public class StandardItem {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
-	public Long getAreaId() {
-		return areaId;
-	}
-	public void setAreaId(Long areaId) {
-		this.areaId = areaId;
-	}
 	public Integer getStandardId() {
 		return standardId;
 	}
 	public void setStandardId(Integer standardId) {
 		this.standardId = standardId;
+	}
+	public Item getItem() {
+		return item;
+	}
+	public void setItem(Item item) {
+		this.item = item;
 	}
 	  
 	  
