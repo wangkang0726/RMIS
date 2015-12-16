@@ -26,7 +26,7 @@ public class Standard  {
   private String name;  //标准名称
   @Column
   private String property;  //项目性质
-  @ManyToOne(targetEntity=StandardItem.class)
+  @OneToMany(targetEntity=StandardItem.class,mappedBy="standardId")
   private List<StandardItem> Item;
 
   
