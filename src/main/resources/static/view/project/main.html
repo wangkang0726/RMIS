@@ -1,27 +1,53 @@
-<meta charset="utf-8" />
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="../../js/jquery-2.1.4.js"></script>
+<title></title>
+<meta charset="UTF-8">
+<script type="text/javascript">
+	$(function(){
+		$.get("/models",function(data){
+			//alert(data[1].property);   //+'<a href="standard/edit.html">详情>>></a>'
+			
+			 for(var i = 0; i < data.length; i++){
+				var tmp = "<tr>"+
+					"<td>"+data[i].name+"</td>"+
+					"<td>"+data[i].date1+"</td>"+
+					"<td>"+data[i].expectPrice+"</td>"+
+					"<td>"+data[i].realPrice +"</td>"+
+					"<td>"+data[i].accountName+"</td>"
+					"</tr>";
+					$("#dataTable").append($(tmp));
+			}
+		}) 
+	});
+
+
+
+</script>
+</head>
+<body>
+<table>
 	<tr>
        <td>公估项目名称：</td>
-       <td><input type="text" name="pname" value=""/></td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <td><input type="text" name="name" value=""/></td>
 	
        <td>使用标准：</td>
-       <td><input type="text" name="pname" value=""/></td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <td><input type="text" name="standard" value=""/></td>
 	
        <td>地区：</td>
-       <td><input type="text" name="pname" value=""/></td>
+       <td><input type="text" name="area" value=""/></td>
        
    </tr>
-   <hr></hr>
-   <tr>
-	  <td>
-	  <center>
+</table>
+   
+	 	<div>
             <button type="submit" class="btn btn-primary" type="button">查询</button> 
             <button type="submit" class="btn btn-primary" type="button">清空</button> 
             <button type="button" class="btn btn-success" id="newNav" ng-click="goAdd('project/add.html')">新增</button>
-		</center>
-       </td>
-   </tr>
-	 <hr></hr>
-<table class="table table-bordered table-sm" id="table">
+		</div>
+   
+<table class="table table-bordered table-sm" id="dataTable">
 <thead class="thead-inverse">
 	<tr>
 		<th>公估项目名称</th>
@@ -32,14 +58,6 @@
 		<th>操作</th>
 	</tr>
 </thead>
-  		<tr >
-         	<td style="vertical-align:middle;">**公司洪水致损</td>
-            <td style="vertical-align:middle;">2012-08-11</td>
-            <td style="vertical-align:middle;">30000</td>
-            <td style="vertical-align:middle;">35000</td>
-            <td style="vertical-align:middle;">小明</td>
-            <td style="vertical-align:middle;"><a ng-click="goDetail('project/edit.html')" href="javascript:void(0);">详情>>></a></td>
-         </tr>
          <tr >
          	<td style="vertical-align:middle;">**公司地震致损</td>
             <td style="vertical-align:middle;">2013-04-24</td>
@@ -48,20 +66,4 @@
             <td style="vertical-align:middle;">小红</td>
             <td style="vertical-align:middle;"><a ng-click="goDetail('project/edit.html')" href="javascript:void(0);">详情>>></a></td>
          </tr>
-         <tr >
-         	<td style="vertical-align:middle;">**公司火灾致损</td>
-            <td style="vertical-align:middle;">2014-11-01</td>
-            <td style="vertical-align:middle;">310000</td>
-            <td style="vertical-align:middle;">350000</td>
-            <td style="vertical-align:middle;">小光</td>
-            <td style="vertical-align:middle;"><a ng-click="goDetail('project/edit.html')" href="javascript:void(0);">详情>>></a></td>
-         </tr>
-         <tr >
-         	<td style="vertical-align:middle;">**公司冰雹致损</td>
-            <td style="vertical-align:middle;">2015-09-30</td>
-            <td style="vertical-align:middle;">11000</td>
-            <td style="vertical-align:middle;">16000</td>
-            <td style="vertical-align:middle;">小亮</td>
-            <td style="vertical-align:middle;"><a ng-click="goDetail('project/edit.html')" href="javascript:void(0);">详情>>></a></td>
-         </tr>
-<table>
+</table>

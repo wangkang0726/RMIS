@@ -17,7 +17,8 @@ public class StandardItem {
 	  private Integer itemId;
 	  @Column
 	  private Double price;  //价格
-	  
+	  @Column
+	  private Long areaId;
 	  
 	  
 	  
@@ -38,6 +39,12 @@ public class StandardItem {
 	}
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+	public Long getAreaId() {
+		return areaId;
+	}
+	public void setAreaId(Long areaId) {
+		this.areaId = areaId;
 	}
 	  
 	  
