@@ -36,7 +36,7 @@ public class Item {
   @Column
   private String numeraire;//记账单位，定价单位
   
-  @OneToOne(mappedBy="itemId",fetch=FetchType.LAZY)
+//  @OneToOne(mappedBy="itemId",fetch=FetchType.LAZY)
   
 //  @JoinTable(name = "StandardItem",
 //  			joinColumns = @JoinColumn(name="id_fk"),  
