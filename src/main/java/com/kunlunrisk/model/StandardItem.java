@@ -15,14 +15,7 @@ public class StandardItem {
 	  private Integer id;
 	  @Column
 	  private Integer standardId;
-	  
-	  public Integer getStandardId() {
-		return standardId;
-	}
-	public void setStandardId(Integer standardId) {
-		this.standardId = standardId;
-	}
-	@Column
+	  @Column
 	  private Double price;  //价格
 	  @Column
 	  private Long areaId;
@@ -46,6 +39,12 @@ public class StandardItem {
 	}
 	public void setAreaId(Long areaId) {
 		this.areaId = areaId;
+	}
+	public Integer getStandardId() {
+		return standardId;
+	}
+	public void setStandardId(Integer standardId) {
+		this.standardId = standardId;
 	}
 	  
 	  
