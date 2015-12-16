@@ -1,11 +1,14 @@
 package com.kunlunrisk.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -32,9 +35,29 @@ public class Item {
   private String moneyType;//单价单位
   @Column
   private String numeraire;//记账单位，定价单位
+  
+  @OneToOne(mappedBy="itemId",fetch=FetchType.LAZY)
+  
+//  @JoinTable(name = "StandardItem",
+//  			joinColumns = @JoinColumn(name="id_fk"),  
+//  			inverseJoinColumns = @JoinColumn(name="itemId_fk"))
+//  private StandardItem standardItem;
+  
+  
+  
 public Integer getId() {
 	return id;
 }
+
+
+//public StandardItem getStandardItem() {
+//	return standardItem;
+//}
+//
+//public void setStandardItem(StandardItem standardItem) {
+//	this.standardItem = standardItem;
+//}
+
 public void setId(Integer id) {
 	this.id = id;
 }

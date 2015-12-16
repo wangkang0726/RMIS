@@ -1,27 +1,59 @@
-<meta charset="utf-8" />
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="../../js/jquery-2.1.4.js"></script>
+<title></title>
+<meta charset="UTF-8">
+<script type="text/javascript">
+	$(function(){
+		$.get("/standards",function(data){
+			//alert(data[1].property);   //+'<a href="standard/edit.html">详情>>></a>'
+			
+			 for(var i = 0; i < data.length; i++){
+				 data[i].property = data[i].property==null ? "" : data[i].property;
+				var tmp = "<tr>"+
+					"<td>"+data[i].name+"</td>"+
+					"<td>"+data[i].year+"</td>"+
+					"<td>"+data[i].area+"</td>"+
+					"<td id=[i]>"+data[i].property + '<button>双击</button>' + "</td>"+
+					"</tr>";
+					$("#dataTable").append($(tmp));
+			}
+		}) 
+	});
 
-	 
- <tr>
+	$("button").dblclick(function(){
+		alert("1");
+		  $("check").warp("<a href='standard/edit.html'></a>");
+		  
+		}); 
+
+</script>
+</head>
+<body>
+  <table > 
+  <tr>
        <td>名称：</td>
-       <td><input type="text" name="pname" value=""/></td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <td><input type="text" name="pname" value=""/></td>
 	
        <td>年份：</td>
-       <td><input type="text" name="pname" value=""/></td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <td><input type="text" name="pname" value=""/></td>
 	
        <td>地区：</td>
        <td><input type="text" name="pname" value=""/></td>
        
    </tr>
+  </table> 
    <tr>
 	  <td>
 	  <center style="margin:10px 0 10px 0;">
             <button type="submit" class="btn btn-primary" type="button">查询</button> 
             <button type="submit" class="btn btn-primary" type="button">清空</button> 
             <button type="button" class="btn btn-success" id="newNav" ng-click="goAdd('standard/add.html')">添加新标准</button>
-		</center>
+	  </center>
        </td>
    </tr>
-<table class="table table-bordered table-sm" id="table">
+<table class="table table-bordered table-sm" id="dataTable">
 	<thead class="thead-inverse">
 		<tr>
 			<th>名称</th>
@@ -32,28 +64,21 @@
 	</thead>
 
 
-		<tr >
-         	<td style="vertical-align:middle;">2012北京标准</td>
-            <td style="vertical-align:middle;">2012</td>
-            <td style="vertical-align:middle;">北京</td>
-            <td style="vertical-align:middle;"><a ng-click="goDetail('standard/edit.html')" href="javascript:void(0);">详情>>></a></td>
+<!-- 	<tr >
+         	<td>2012北京标准</td>
+            <td>2012</td>
+            <td>北京</td>
+            <td><button type="button" class="btn btn-success" id="newNav" ng-click="standard/edit.html">详情</button></td>
          </tr>
+ -->
          <tr >
-         	 <td style="vertical-align:middle;">2012陕西标准</td>
-            <td style="vertical-align:middle;">2012</td>
-            <td style="vertical-align:middle;">陕西</td>
-            <td style="vertical-align:middle;"><a ng-click="goDetail('standard/edit.html')" href="javascript:void(0);">详情>>></a></td>
-         </tr>
-         <tr >
-         	<td style="vertical-align:middle;">2013重庆标准</td>
-            <td style="vertical-align:middle;">2013</td>
-            <td style="vertical-align:middle;">重庆</td>
-            <td style="vertical-align:middle;"><a ng-click="goDetail('standard/edit.html')" href="javascript:void(0);">详情>>></a></td>
-         </tr>
-         <tr >
-         	 <td style="vertical-align:middle;">2015新疆标准</td>
-            <td style="vertical-align:middle;">2015</td>
-            <td style="vertical-align:middle;">新疆</td>
-            <td style="vertical-align:middle;"><a ng-click="goDetail('standard/edit.html')" href="javascript:void(0);">详情>>></a></td>
-         </tr>
-<table>
+         	 <td >2012陕西标准</td>
+            <td>2012</td>
+            <td>陕西</td>
+            <td><a ng-click="goDetail('standard/edit.html/')" href="javascript:void(0);">详情>>></a></td>
+         </tr>  
+
+        
+</table>
+</body>
+</html>

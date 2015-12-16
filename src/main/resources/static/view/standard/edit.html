@@ -1,19 +1,80 @@
-<meta charset="utf-8" />
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="../../js/jquery-2.1.4.js"></script>
+<title></title>
+<meta charset="UTF-8">
+<script type="text/javascript">
+$(function(){
+	$.get("/standardItems",function(data){
+		for(var i = 0; i < data.length; i++){
+			data[i].parentName = data[i].parentName==null ? "" : data[i].parentName;
+			var tmp = "<tr>"+
+							"<td>"+data[i].no +"</td>"+
+							"<td>"+data[i].name+"</td>"+
+							"<td>"+data[i].parentName+"</td>"+
+							"<td>"+data[i].price+"</td>"+         
+							"<td>"+data[i].moneyType+"</td>";
+							if(data[i].numeraire == '1') {tmp += "<td>m³</td>";}else if
+								(data[i].numeraire == '2'){tmp += "<td>㎡</td>";}else if
+								(data[i].numeraire == '3'){tmp += "<td>m</td>"}else if
+								(data[i].numeraire == '4'){tmp += "<td>个</td>"}else if
+								(data[i].numeraire == '5'){tmp += "<td>根</td>"}else if
+								(data[i].numeraire == '6'){tmp += "<td>吨</td>"}else {
+												tmp = tmp+ "<td></td>" ;
+							}
+									
+					  tmp += "</tr>";
+			$("#standardItem").append($(tmp));
+		}
+	});
+});
 
-  	<tr>
-        <td>名称</td>
-        <td><input type="text" name="name" value="2012年北京标准"/></td>
-    </tr>
-    <tr>
-        <td>年份</td>
-        <td><input type="text" name="year" value="2012年"/></td>
-    </tr>
-    <tr>
-        <td>地区</td>
-        <td><select ><option>北京</option><option>浙江</option><option>甘肃</option><option>辽宁</option><option>新疆</option></select></td>
-    </tr>
-		  <hr></hr>  
-	<table class="table table-bordered table-sm" id="table">
+
+
+$(function(){
+	$.get("/standards",function(data1){
+		//alert(data1[2].area);
+		
+		 for(var i = 0; i < data1.length; i++) {
+			 var a =	
+			 "<tr>"+
+				"<td>"+data1[i].name+"</td>"+
+				"<td>"+data1[i].year+"</td>"+
+				"<td>"+data1[i].area+"</td>"+
+			"</tr>";
+				$("#x").append($(a));
+		}
+	}) 
+});
+
+</script>
+</head>
+<body>
+	<table class="table table-bordered table-sm" id="x">
+		<thead class="thead-inverse">
+			<tr>
+				<th>名称</th>
+				<th>年份</th>
+				<th>地区</th>
+			</tr>
+		</thead>
+		
+	  	<!-- <tr>
+	        <td>名称</td>
+	        <td><input type="text" name="name" value="2012年北京标准"/></td>
+	    </tr>
+	    <tr>
+	        <td>年份</td>
+	        <td><input type="text" name="year" value="2012年"/></td>
+	    </tr>
+	    <tr>
+	        <td>地区</td>
+	        <td><select><option>北京</option><option>浙江</option><option>甘肃</option><option>辽宁</option><option>新疆</option></select></td>
+	    </tr> -->
+    </table>
+    
+	<table class="table table-bordered table-sm" id="standardItem">
 			<thead class="thead-inverse">
 				<tr>
 					<th>编号</th>
@@ -25,11 +86,11 @@
 				</tr>
 			</thead>
 		
-	 			 <tr >
+	 			<!--  <tr >
 		            <td>101</td>
 		            <td>边坡平整</td>
 		            <td></td>
-		            <td><input type="text" name="price" value="2"/></td>
+		            <td><input type="text" name="price" value="1"/></td>
 		            <td>元</td>
 		            <td>m³</td>
 	         	</tr>
@@ -38,7 +99,7 @@
 		            <td>102</td>
 		            <td>地貌恢复（果园、耕地、玉米）</td>
 		            <td>地貌恢复</td>
-		            <td><input type="text" name="price" value="5"/></td>
+		            <td><input type="text" name="price" value="2"/></td>
 		            <td>元</td>
 		            <td>m³</td>
 	         	</tr>
@@ -54,13 +115,15 @@
 		            <td>104</td>
 		            <td>便道</td>
 		            <td></td>
-		            <td><input type="text" name="price" value="7"/></td>
+		            <td><input type="text" name="price" value="4"/></td>
 		            <td>元</td>
 		            <td>m³</td>
-	         	</tr>
-	<table>
+	         	</tr> -->
+	</table>
 	
-	<center>
+	<div>
 		<button type="submit" class="btn btn-primary" type="button" >保存</button>
 		<button type="button" class="btn btn-success" name="backid" id="backid" ng-click="backMain();">返回列表</button>
-	</center>
+	</div>
+</body>
+</html>
