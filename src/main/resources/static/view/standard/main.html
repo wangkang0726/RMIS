@@ -8,7 +8,7 @@
 			 for(var i = 0; i < data.length; i++){
 				 data[i].property = data[i].property==null ? "" : data[i].property;
 				var tmp = "<tr>"+
-					"<td onclick=edit('"+data[i].href+"')>"+data[i].name+"</td>"+
+					"<td><a ng-click='goDetail(\'standard/edit.html\',1)' href='javascript:void(0);'>"+data[i].name+"</a></td>"+
 					"<td>"+data[i].year+"</td>"+
 					"<td>"+data[i].area+"</td>"+
 					"<td>"+data[i].property+"</td>"+
@@ -22,6 +22,7 @@
 		
 		window.location.href='standard/edit.html/'
 	}
+	
 </script>
 </head>
 <body>
@@ -62,12 +63,12 @@
             <td><button type="button" class="btn btn-success" id="newNav" ng-click="standard/edit.html">详情</button></td>
          </tr>
  -->
-         <tr >
+       <!--   <tr >
          	<td >2012陕西标准</td>
             <td>2012</td>
             <td>陕西</td>
-            <td><a ng-click="goDetail('standard/edit.html/',1)"  href="javascript:void(0);">详情>>></a></td>
-         </tr>  
+            <td><a ng-click="goDetail('standard/edit.html/',2)"  href="javascript:void(0);">详情>>></a></td>
+         </tr>   -->
 
         
 </table>
