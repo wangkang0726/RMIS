@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kunlunrisk.model.Standard;
+import com.kunlunrisk.model.StandardItem;
 import com.kunlunrisk.repository.StandardRepository;
 
 @RestController
@@ -22,6 +23,11 @@ public class StandardController {
 	@RequestMapping(method = RequestMethod.GET)
 	public List<Standard> findStandards(){
 		return standardRepository.findAll();
+	}
+	
+	@RequestMapping(value = "/get/items/{id}",method = RequestMethod.GET)
+	public List<StandardItem> findItems(@PathVariable Integer id){
+		return standardRepository.findOne(id).getItem();
 	}
 	
 	@RequestMapping(value = "/get/{id}",method = RequestMethod.GET)

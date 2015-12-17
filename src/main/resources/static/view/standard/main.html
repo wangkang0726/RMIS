@@ -12,25 +12,24 @@
 			 for(var i = 0; i < data.length; i++){
 				 data[i].property = data[i].property==null ? "" : data[i].property;
 				var tmp = "<tr>"+
-					"<td>"+data[i].name+"</td>"+
+					"<td onclick=edit('"+data[i].href+"')>"+data[i].name+"</td>"+
 					"<td>"+data[i].year+"</td>"+
 					"<td>"+data[i].area+"</td>"+
-					"<td id=[i]>"+data[i].property + '<button>双击</button>' + "</td>"+
+					"<td>"+data[i].property+"</td>"+
 					"</tr>";
 					$("#dataTable").append($(tmp));
 			}
 		}) 
 	});
 
-	$("button").dblclick(function(){
-		alert("1");
-		  $("check").warp("<a href='standard/edit.html'></a>");
-		  
-		}); 
-
+	function edit(value){
+		
+		window.location.href='standards/edit.html';
+		};
 </script>
 </head>
 <body>
+	
   <table > 
   <tr>
        <td>名称：</td>
@@ -44,15 +43,11 @@
        
    </tr>
   </table> 
-   <tr>
-	  <td>
-	  <center style="margin:10px 0 10px 0;">
-            <button type="submit" class="btn btn-primary" type="button">查询</button> 
-            <button type="submit" class="btn btn-primary" type="button">清空</button> 
-            <button type="button" class="btn btn-success" id="newNav" ng-click="goAdd('standard/add.html')">添加新标准</button>
-	  </center>
-       </td>
-   </tr>
+  <div align="center">
+      <button type="submit" class="btn btn-primary" type="button">查询</button> 
+      <button type="submit" class="btn btn-primary" type="button">清空</button> 
+      <button type="button" class="btn btn-success" id="newNav" ng-click="goAdd('standard/add.html')">添加新标准</button>
+  </div>
 <table class="table table-bordered table-sm" id="dataTable">
 	<thead class="thead-inverse">
 		<tr>
@@ -72,10 +67,10 @@
          </tr>
  -->
          <tr >
-         	 <td >2012陕西标准</td>
+         	<td >2012陕西标准</td>
             <td>2012</td>
             <td>陕西</td>
-            <td><a ng-click="goDetail('standard/edit.html/')" href="javascript:void(0);">详情>>></a></td>
+            <td><a ng-click="getDetail('standard/edit2.html/',1)" href="javascript:void(0);">详情>>></a></td>
          </tr>  
 
         

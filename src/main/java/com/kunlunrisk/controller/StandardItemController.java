@@ -25,6 +25,7 @@ public class StandardItemController {
 		return standardItemRepository.findAll();
 	}
 	
+	
 	@RequestMapping(value = "/get/{id}",method = RequestMethod.GET)
 	public StandardItem findStandardItem(@PathVariable Integer id){
 		return standardItemRepository.findOne(id);

@@ -6,8 +6,34 @@
 <meta charset="UTF-8">
 <script type="text/javascript">
 
+$(function(){
+	$.get("/standards/get/items/2",function(data){
+		for(var i = 0; i < data.length; i++){
+			data[i].item.parentName = data[i].item.parentName==null ? "" : data[i].item.parentName;
+			data[i].price = data[i].price==null?"" :data[i].price;
+			var tmp = "<tr>"+
+							"<td>"+data[i].item.no +"</td>"+
+							"<td>"+data[i].item.name+"</td>"+
+							"<td>"+data[i].item.parentName+"</td>"+
+							"<td>"+data[i].price+"</td>"+         
+							"<td>"+data[i].item.moneyType+"</td>";
+							if(data[i].item.numeraire == '1') {tmp += "<td>m³</td>";}else if
+								(data[i].item.numeraire == '2'){tmp += "<td>㎡</td>";}else if
+								(data[i].item.numeraire == '3'){tmp += "<td>m</td>"}else if
+								(data[i].item.numeraire == '4'){tmp += "<td>个</td>"}else if
+								(data[i].item.numeraire == '5'){tmp += "<td>根</td>"}else if
+								(data[i].item.numeraire == '6'){tmp += "<td>吨</td>"}else {
+												tmp = tmp+ "<td></td>" ;
+							}
+									
+					  tmp += "</tr>";
+			$("#table").append($(tmp));
+		}
+	});
+});
 </script>
 </head>
+<body>
 <table>
   	<tr>
         <td>名称</td>
@@ -42,21 +68,13 @@
 					<th>定价单位</th>
 				</tr>
 			</thead>
-		
-	 			 <tr >
-		            <td>101</td>
-		            <td>边坡平整</td>
-		            <td></td>
-		            <td><input type="text" name="price" value=""/></td>
-		            <td>元</td>
-		            <td>m³</td>
-	         	</tr>
-		
-	<center>
+	
+	<div align="center">
 		<button type="submit" class="btn btn-primary" type="button" >保存</button>
 		<button type="button" class="btn btn-success" name="backid" id="backid" ng-click="backMain();">返回列表</button>
-	</center>
+	</div>
 	</table>
+	</body>
 </html>
 
 	

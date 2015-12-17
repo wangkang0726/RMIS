@@ -10,18 +10,20 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity(name="T_STANDARD_ITEM")
 public class StandardItem {
 
-	  @Id
-	  @GeneratedValue(generator = "custom-id")
-	  @GenericGenerator(name = "custom-id", strategy = "increment")
-	  private Integer id;
-	  @Column
-	  private Integer standardId;
-	  @Column
-	  private Double price;  //价格
-	  @ManyToOne
-	  private Item item;
+  @Id
+  @GeneratedValue(generator = "custom-id")
+  @GenericGenerator(name = "custom-id", strategy = "increment")
+  private Integer id;
+  @Column
+  private Integer standardId;
+  @Column
+  private Double price;  //价格
+  @ManyToOne
+  private Item item;
   
-	public Integer getId() {
+  
+    
+  	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {

@@ -1,6 +1,7 @@
 var rmis = angular.module("rmis",[]);
 rmis.controller("mainCtrl",function($scope, $http){
 	$scope.main = true;
+	$scope.pagePara = {};
 	$http.get("/menus").success(function(data){
 		$scope.menu = data;
 		$scope.curr = data[0];
@@ -14,8 +15,9 @@ rmis.controller("mainCtrl",function($scope, $http){
 		$scope.mainUrl = "view/"+item.url;
 	}
 	
-	$scope.goDetail = function(url){
+	$scope.goDetail = function(url,para){
 		$scope.main = false;
+		$scope.pagePara = para;
 		$scope.secondUrl = "view/"+url
 	}
 	$scope.backMain = function(){
