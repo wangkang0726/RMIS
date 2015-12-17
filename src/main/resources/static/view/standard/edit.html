@@ -31,7 +31,8 @@ $(function(){
 
 
 $(function(){
-	$.get("/standards",function(data1){
+	var pagePara = angular.element($("#mainCtrl")).scope().pagePara;
+	$.get("/standards/get/"+ pagePara,function(data1){
 		//alert(data1[2].area);
 		
 		 for(var i = 0; i < data1.length; i++) {
