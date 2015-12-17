@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-<script type="text/javascript" src="../../js/jquery-2.1.4.js"></script>
-<title></title>
+
 <meta charset="UTF-8">
 <script type="text/javascript">
 $(function(){
-	$.get("/standards/get/items/2",function(data){
+	var pagePara = angular.element($("#mainCtrl")).scope().pagePara;
+	$.get("/standards/get/items/" + pagePara,function(data){
 		for(var i = 0; i < data.length; i++){
 			data[i].item.parentName = data[i].item.parentName==null ? "" : data[i].item.parentName;
 			data[i].price = data[i].price==null?"" :data[i].price;
@@ -83,5 +80,3 @@ $(function(){
 		<button type="submit" class="btn btn-primary" type="button" >保存</button>
 		<button type="button" class="btn btn-success" name="backid" id="backid" ng-click="backMain();">返回列表</button>
 	</div>
-</body>
-</html>
