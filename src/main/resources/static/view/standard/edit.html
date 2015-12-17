@@ -1,8 +1,10 @@
 
 <meta charset="UTF-8">
 <script type="text/javascript">
+/*alert('x');
 $(function(){
 	var pagePara = angular.element($("#mainCtrl")).scope().pagePara;
+	alert(pagePara);
 	$.get("/standards/get/items/" + pagePara,function(data){
 		for(var i = 0; i < data.length; i++){
 			data[i].item.parentName = data[i].item.parentName==null ? "" : data[i].item.parentName;
@@ -27,9 +29,9 @@ $(function(){
 		}
 	});
 });
+*/
 
-
-
+/*
 $(function(){
 	$.get("/standards/get/2",function(data1){
 		//alert(data1[2].area);
@@ -44,7 +46,7 @@ $(function(){
 				$("#x").append($(a));
 		}
 	}) 
-});
+});*/
 
 </script>
 </head>
@@ -72,7 +74,14 @@ $(function(){
 					<th>定价单位</th>
 				</tr>
 			</thead>
-		
+			<tr ng-repeat="p in pagePara">
+					<th>{{p.no}}</th>
+					<th>{{p.item.name}}</th>
+					<th>{{p.parentName}}</th>
+					<th>{{p.price}}</th>
+					<th>{{p.moneyType}}</th>
+					<th>{{p.parentName}}</th>
+				</tr>
 	 			
 	</table>
 	

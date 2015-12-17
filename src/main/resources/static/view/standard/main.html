@@ -2,9 +2,11 @@
 <meta charset="UTF-8">
 <script type="text/javascript">
 function openPage(url,id){
-	var scope = angular.element($("#mainCtrl")).scope();
-	scope.goDetail(url,id);
-	scope.$apply();
+	var scope = angular.element($("#mainCtrl")).scope()
+	$.get("/standards/get/items/" + id,function(data){
+		scope.goDetail(url,data);
+		scope.$apply();
+	});
 }
 	$(function(){
 		$.get("/standards",function(data){
