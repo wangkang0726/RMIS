@@ -1,5 +1,6 @@
 
 	{{pagePara}}
 <script>
-alert('{{pagePara}}');
+var scope = angular.element(jQuery('#mainCtrl')).scope();
+alert(scope.pagePara);
 </script>
