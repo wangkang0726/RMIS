@@ -1,6 +1,11 @@
 
 <meta charset="UTF-8">
 <script type="text/javascript">
+function openPage(url,id){
+	var scope = angular.element($("#mainCtrl")).scope();
+	scope.goDetail(url,id);
+	scope.$apply();
+}
 	$(function(){
 		$.get("/standards",function(data){
 			//alert(data[1].property);   //+'<a href="standard/edit.html">详情>>></a>'
@@ -8,7 +13,7 @@
 			 for(var i = 0; i < data.length; i++){
 				 data[i].property = data[i].property==null ? "" : data[i].property;
 				var tmp = "<tr>"+
-					"<td><a ng-click='goDetail(\'standard/edit.html\',1)' href='javascript:void(0);'>"+data[i].name+"</a></td>"+
+					"<td><a onclick=\"openPage('standard/edit.html',1)\" href='javascript:void(0);'>"+data[i].name+"</a></td>"+
 					"<td>"+data[i].year+"</td>"+
 					"<td>"+data[i].area+"</td>"+
 					"<td>"+data[i].property+"</td>"+
