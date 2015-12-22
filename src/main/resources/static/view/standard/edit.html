@@ -1,52 +1,33 @@
-
 <meta charset="UTF-8">
 <script type="text/javascript">
-/*alert('x');
-$(function(){
-	var pagePara = angular.element($("#mainCtrl")).scope().pagePara;
-	alert(pagePara);
-	$.get("/standards/get/items/" + pagePara,function(data){
-		for(var i = 0; i < data.length; i++){
-			data[i].item.parentName = data[i].item.parentName==null ? "" : data[i].item.parentName;
-			data[i].price = data[i].price==null?"" :data[i].price;
-			var tmp = "<tr>"+
-							"<td>"+data[i].item.no +"</td>"+
-							"<td>"+data[i].item.name+"</td>"+
-							"<td>"+data[i].item.parentName+"</td>"+
-							"<td>"+data[i].price+"</td>"+         
-							"<td>"+data[i].item.moneyType+"</td>";
-							if(data[i].item.numeraire == '1') {tmp += "<td>m³</td>";}else if
-								(data[i].item.numeraire == '2'){tmp += "<td>㎡</td>";}else if
-								(data[i].item.numeraire == '3'){tmp += "<td>m</td>"}else if
-								(data[i].item.numeraire == '4'){tmp += "<td>个</td>"}else if
-								(data[i].item.numeraire == '5'){tmp += "<td>根</td>"}else if
-								(data[i].item.numeraire == '6'){tmp += "<td>吨</td>"}else {
-												tmp = tmp+ "<td></td>" ;
-							}
-									
-					  tmp += "</tr>";
-			$("#standardItem").append($(tmp));
-		}
-	});
-});
-*/
 
-/*
 $(function(){
-	$.get("/standards/get/2",function(data1){
+	$.get("/standards/",function(data1){
 		//alert(data1[2].area);
 		
 		 for(var i = 0; i < data1.length; i++) {
 			 var a =	
 			 "<tr>"+
 				"<td>"+data1[i].name+"</td>"+
-				"<td>"+data1[i].year+"</td>"+
-				"<td>"+data1[i].area+"</td>"+
-			"</tr>";
+				"<td>"+data1[i].year+"</td>";
+				if(data1[i].area == '1'){a += "<td>甘肃</td>";}else if
+				(data1[i].area == '2'){a += "<td>贵州</td>";}else if
+				(data1[i].area == '3'){a += "<td>河南</td>";}else if
+				(data1[i].area == '4'){a += "<td>江西</td>";}else if
+				(data1[i].area == '5'){a += "<td>辽宁</td>";}else if
+				(data1[i].area == '6'){a += "<td>宁夏</td>";}else if
+				(data1[i].area == '7'){a += "<td>陕西</td>";}else if
+				(data1[i].area == '8'){a += "<td>四川</td>";}else if
+				(data1[i].area == '9'){a += "<td>新疆</td>";}else if
+				(data1[i].area == '10'){a += "<td>浙江</td>";}else if
+				(data1[i].area == '11'){a += "<td>重庆</td>";}else{
+					a = a + "<td></td>";
+				}
+			a += "</tr>";
 				$("#x").append($(a));
 		}
 	}) 
-});*/
+});
 
 </script>
 </head>
@@ -59,10 +40,15 @@ $(function(){
 				<th>地区</th>
 			</tr>
 		</thead>
-		
+	
 	  
     </table>
     
+    <div align="center">
+		<button type="submit" class="btn btn-primary" type="button" >保存</button>
+		<button type="button" class="btn btn-success" name="backid" id="backid" ng-click="backMain();">返回列表</button>
+	</div>
+	
 	<table class="table table-bordered table-sm" id="standardItem">
 			<thead class="thead-inverse">
 				<tr>
@@ -78,14 +64,17 @@ $(function(){
 					<td>{{p.item.no}}</td>
 					<td>{{p.item.name}}</td>
 					<td>{{p.item.parentName}}</td>
-					<td>{{p.price}}</td>
-					<td>{{p.item.moneyType}}</th>
-					<td>{{p.item.numeraire}}</td>
+					<td><input id="price" name="price" value="{{p.price}}"/></td>
+					<td>{{p.item.moneyType}}</td>
+					<td>
+						{{p.item.numeraire=='1'?'m³':''}}
+						{{p.item.numeraire=='2'?'㎡':''}}
+						{{p.item.numeraire=='3'?'m':''}}
+						{{p.item.numeraire=='4'?'个':''}}
+						{{p.item.numeraire=='5'?'根':''}}
+						{{p.item.numeraire=='6'?'吨':''}}
+					</td>
 				</tr>
 	 			
 	</table>
-	
-	<div align="center">
-		<button type="submit" class="btn btn-primary" type="button" >保存</button>
-		<button type="button" class="btn btn-success" name="backid" id="backid" ng-click="backMain();">返回列表</button>
-	</div>
+

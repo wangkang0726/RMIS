@@ -3,6 +3,7 @@ package com.kunlunrisk.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kunlunrisk.model.StandardItem;
+import com.kunlunrisk.repository.ItemRepository;
 import com.kunlunrisk.repository.StandardItemRepository;
 
 
@@ -19,6 +21,8 @@ public class StandardItemController {
 
 	@Autowired
 	private StandardItemRepository standardItemRepository;
+	@Autowired
+	private ItemRepository itemRepository;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public List<StandardItem> findStandardItems(){
@@ -31,11 +35,16 @@ public class StandardItemController {
 		return standardItemRepository.findOne(id);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST)
-	public StandardItem addStandardItem(@RequestBody StandardItem standardItem){
+	@RequestMapping(value = "/add/{standardId}", method = RequestMethod.POST)
+	public StandardItem addStandardItem(@RequestBody StandardItem standardItem, @PathVariable Integer standardId,@Param(value = "itemId") Integer itemId,@Param(value = "price") Double price){
 		standardItem.setId(null);
+		standardItem.setStandardId(standardId);
+		standardItem.setItem(itemRepository.getOne(itemId));
+		standardItem.setPrice(price);
 		return standardItemRepository.saveAndFlush(standardItem);
 	}
+	
+
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public StandardItem updateStandardItem(@RequestBody StandardItem entity, @PathVariable Integer id){

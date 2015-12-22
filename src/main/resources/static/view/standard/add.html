@@ -1,59 +1,94 @@
-<!DOCTYPE html>
-<html>
-<head>
-<script type="text/javascript" src="../../js/jquery-2.1.4.js"></script>
-<title></title>
-<meta charset="UTF-8">
+ 
 <script type="text/javascript">
-
 $(function(){
-	$.get("/standards/get/items/2",function(data){
-		for(var i = 0; i < data.length; i++){
-			data[i].item.parentName = data[i].item.parentName==null ? "" : data[i].item.parentName;
-			data[i].price = data[i].price==null?"" :data[i].price;
-			var tmp = "<tr>"+
-							"<td>"+data[i].item.no +"</td>"+
-							"<td>"+data[i].item.name+"</td>"+
-							"<td>"+data[i].item.parentName+"</td>"+
-							"<td>"+data[i].price+"</td>"+         
-							"<td>"+data[i].item.moneyType+"</td>";
-							if(data[i].item.numeraire == '1') {tmp += "<td>m³</td>";}else if
-								(data[i].item.numeraire == '2'){tmp += "<td>㎡</td>";}else if
-								(data[i].item.numeraire == '3'){tmp += "<td>m</td>"}else if
-								(data[i].item.numeraire == '4'){tmp += "<td>个</td>"}else if
-								(data[i].item.numeraire == '5'){tmp += "<td>根</td>"}else if
-								(data[i].item.numeraire == '6'){tmp += "<td>吨</td>"}else {
-												tmp = tmp+ "<td></td>" ;
+	$('#save').click(function (){
+		
+			$.ajax({url:"/standards/add",
+				type:'POST',
+				data: JSON.stringify({name:$("#name").val(),year:$("#year").val(),area:$("#area").val(),property:$("#property").val()}),
+				contentType: "application/json",
+				dataType: 'json',
+				success:function(data){
+				/* 	
+				    $('input[name=price]').each(function (i,n){
+						$.post("/standardItems/add/"+d.id,{itemId:$('#itemId'+i).val(),price:$('#price').val()},function(val){});
+					});  
+				  
+					//price:$(n).val()}
+			
+				    $.ajax({url:"/standardItems/add/"+ d.id,
+						type:'POST',
+						data: JSON.stringify({price:$({price:$('.price',$(this)).val(), standardId:$("#standardId").val(), itemId:$('.itemId',$(this)).val()}),
+						contentType: "application/json",
+						dataType: 'json',
+						success:function(d){
+							
+						}
+					});   
+				  */
+				    $('.dt').each(function(){
+				    	alert($('.price', $(this)).val());
+						 $.ajax({url:"/standardItems/add/"+ d.id,
+							type:'POST',
+							data: JSON.stringify({price:$('.price',$(this)).val()}),
+							contentType: "application/json",
+							dataType: 'json',
+							success:function(d){
+								
 							}
-									
-					  tmp += "</tr>";
-			$("#table").append($(tmp));
-		}
+						}); 
+					});
+					 alert("ok！！")
+				     
+				},
+				error: function(xhr, type){
+					alert("保存失败！");
+				}
+			
+			});
 	});
 });
+
 </script>
-</head>
-<body>
 <table>
   	<tr>
-        <td>名称</td>
-        <td><input type="text" name="name" value=""/></td>
-    </tr>
-    <tr>
-        <td>年份</td>
-        <td><input type="text" name="year" value=""/></td>
-    </tr>
-    <tr>
-        <td>地区</td>
+        <td>名称：</td>
+        <td><input type="text" name="name" id="name"/></td>
+        <td>年份：</td>
+        <td><input type="text" name="year" id="year"/></td>
+        <td>地区：</td>
         <td>
-        	<select>
-		        <option>北京</option>
-		        <option>浙江</option>
-		        <option>甘肃</option>
-		        <option>辽宁</option>
-		        <option>新疆</option>
+	     	<select id="area" name="area">
+		        <option value="1">甘肃</option>
+		        <option value="2">贵州</option>
+		        <option value="3">河南</option>
+		        <option value="4">江西</option>
+		        <option value="5">辽宁</option>
+		        <option value="6">宁夏</option>
+		        <option value="7">陕西</option>
+		        <option value="8">四川</option>
+		        <option value="9">新疆</option>
+		        <option value="10">浙江</option>
+		        <option value="11">重庆</option>
 	        </select>
 	     </td>
+        <td>项目性质：</td>
+        <td>
+        	<select id="property" name="property">
+		        <option value="1">统筹型</option>
+		        <option value="2">市场化-非股东</option>
+		        <option value="3">市场化-参控股</option>
+		        <option value="4">市场化-员工福利</option>
+		        <option value="5">市场化-再保险</option>
+		        <option value="6">市场化-海外业务</option>
+		        <option value="7">市场化-全资新险种</option>
+		        <option value="8">市场化-其他</option>
+		        <option value="9">市场化-风险咨询</option>
+		        <option value="10">公估-中石油业务</option>
+		        <option value="11">公估-非中石油业务</option>
+	        </select>
+	     </td>
+	     
     </tr>
 </table>
 	<table class="table table-bordered table-sm" id="table">
@@ -63,18 +98,200 @@ $(function(){
 					<th>编号</th>
 					<th>项目名称</th>
 					<th>上级项目</th>
-					<th>价格</th>
+					<th>价格</th> 
 					<th>单价</th>
 					<th>定价单位</th>
 				</tr>
 			</thead>
-	
+			<tbody>
+		
+				<tr ng-repeat="item in pagePara"  class="dt">
+					<td>{{item.no}}</td>
+					<td>{{item.name}}</td>
+					<td>{{item.parent}}</td>
+					<td>
+					   <input type="text" name="price" id="price{{$index}}" value=""/>
+					   <input type="hidden" name="itemId" id="itemId{{$index}}" value="{{item.id}}"/>
+					</td>
+					<td>{{item.moneyType}}</td>
+					<td>
+						{{item.numeraire=='1'?'m³':''}}
+						{{item.numeraire=='2'?'㎡':''}}
+						{{item.numeraire=='3'?'m':''}}
+						{{item.numeraire=='4'?'个':''}}
+						{{item.numeraire=='5'?'根':''}}
+						{{item.numeraire=='6'?'吨':''}}
+					</td>
+				</tr>
+			</tbody>
 	<div align="center">
-		<button type="submit" class="btn btn-primary" type="button" >保存</button>
+		<button type="button" class="btn btn-primary" type="button" id="save">保存</button>
 		<button type="button" class="btn btn-success" name="backid" id="backid" ng-click="backMain();">返回列表</button>
 	</div>
 	</table>
-	</body>
-</html>
+	
+	<script>
+	
+	/* 	$("#save").click(function(){
+			
+			//alert("okkk");
+			$.ajax({url:"/standards",
+				type:'POST',
+				data: JSON.stringify({name:$("#name").val(),year:$("#year").val(),area:$("#area").val(),property:$("#property").val() }),
+				contentType: "application/json",
+				dataType: 'json',
+				success:function(data){
+					console.log(data);
+					alert("ok!");
+					$('.dt').each(function(){
+						//alert($('.price',$(this)).val());
+						 $.ajax({url:"/standardItems/add/"+ data.id,
+							type:'POST',
+							data: JSON.stringify({price:$('.price',$(this)).val(), standardId:$("#standardId").val(), itemId:$('.itemId',$(this)).val()}),
+							contentType: "application/json",
+							dataType: 'json',
+							success:function(d){
+								
+							}
+						}); 
+						
+					});
+				},
+			
+				error: function(xhr, type){
+					alert("保存失败！");
+				}
+			
+			});
+			
+		}); */
+		
+		
+		/*
+		$(function(){
+		$.post("/standards/add",{},function(data){
+			alert(data);
+			for(var i = 0; i < data.length; i++){
+				data[i].item.parentName = data[i].item.parentName==null ? "" : data[i].item.parentName;
+				data[i].price = data[i].price==null?"" :data[i].price;
+				//"<td>"+data[i].price+"</td>"+    // "<input type=\"text\" name=\"price\" id=\"price\" value=\" \"/>" +"</td>"
+				var tmp = "<tr class='dt'>"+
+								"<td>"+data[i].item.no +"<input type='hidden' class='itemId' name='item' value='"+data[i].item.id+"'></td>"+
+								"<td>"+data[i].item.name+"</td>"+
+								"<td>"+data[i].item.parentName+"</td>"+
+								"<td>"+"<input type='text' name='price' class='price' value=''/>" +"</td>"+         
+								"<td>"+data[i].item.moneyType+"</td>";
+								if(data[i].item.numeraire == '1') {tmp += "<td>m³</td>";}else if
+									(data[i].item.numeraire == '2'){tmp += "<td>㎡</td>";}else if
+									(data[i].item.numeraire == '3'){tmp += "<td>m</td>"}else if
+									(data[i].item.numeraire == '4'){tmp += "<td>个</td>"}else if
+									(data[i].item.numeraire == '5'){tmp += "<td>根</td>"}else if
+									(data[i].item.numeraire == '6'){tmp += "<td>吨</td>"}else {
+													tmp = tmp+ "<td></td>" ;
+								}
+										
+						  tmp += "</tr>";
+				$("#table").append($(tmp));
+			}
+		});
+	});*/
+			/*<!-- 	<td>{{item.item.no}}</td>
+					<td>{{item.item.name}}</td>
+					<td>{{item.item.parent}}</td>
+					<td>{{item.item.moneyType}}</td>
+					<td>{{item.item.numeraire}}</td> -->*/
+					
+	/*
+			$(function(){
+			$('#save').click(function (){
+				
+					$.ajax({url:"/standards/add",
+						type:'POST',
+						data: JSON.stringify({name:$("#name").val(),year:$("#year").val(),area:$("#area").val(),property:$("#property").val()}),
+						contentType: "application/json",
+						dataType: 'json',
+						success:function(data){
+						
+						    $('.dt').each(function(){
+								alert($('.price',$(this)).val());
+								 $.ajax({url:"/standardItems/add/"+ d.id,
+									type:'POST',
+									data: JSON.stringify({price:$('.price',$(this)).val()}),
+									contentType: "application/json",
+									dataType: 'json',
+									success:function(d){
+										
+									}
+								}); 
+							});
+							 alert("ok！！")
+						     
+						},
+						error: function(xhr, type){
+							alert("保存失败！");
+						}
+					
+					});
+			});
+		});
+			
+	*/
+	/*
+	
+	$(function(){
+	$('#save').click(function (){
+		
+			$.ajax({url:"/standards/add",
+				type:'POST',
+				data: JSON.stringify({name:$("#name").val(),year:$("#year").val(),area:$("#area").val(),property:$("#property").val()}),
+				contentType: "application/json",
+				dataType: 'json',
+				success:function(data){
+						
+					    $('input[name=price]').each(function (i,n){
+							$.post("/standardItems/add/"+d.id,{itemId:$('#itemId'+i).val(),price:$('#price').val()},function(val){});
+						});  
+					  
+						//price:$(n).val()}
+				
+					    $.ajax({url:"/standardItems/add/"+ d.id,
+							type:'POST',
+							data: JSON.stringify({price:$({price:$('.price',$(this)).val(), standardId:$("#standardId").val(), itemId:$('.itemId',$(this)).val()}),
+							contentType: "application/json",
+							dataType: 'json',
+							success:function(d){
+								
+							}
+						});   
+					  
+				    $('.dt').each(function(){
+						alert($('.price',$(this)).val());
+						 $.ajax({url:"/standardItems/add/"+ d.id,
+							type:'POST',
+							data: JSON.stringify({price:$('.price',$(this)).val()}),
+							contentType: "application/json",
+							dataType: 'json',
+							success:function(d){
+								
+							}
+						}); 
+					});
+					 alert("ok！！")
+				     
+				},
+				error: function(xhr, type){
+					alert("保存失败！");
+				}
+			
+			});
+	});
+});
+	
+	
+	
+	*/
+	
+	</script>
+
 
 	
