@@ -1,5 +1,33 @@
 <meta charset="UTF-8">
-<script type="text/javascript">
+<script>
+
+$(function(){
+	$('#update').click(function(){
+		$.ajax({
+			url:"/standards/"+$("#standardId").val(),
+			type:'PUT',
+			data:JSON.stringify({name:$("#name").val(),year:$("#year").val(),area:$("#area").val(),property:$("#property").val()}),
+			contentType: "application/json",
+			dataType: 'json',
+			success:function(data){
+				var d = eval(data);
+			    $('input[name=price]').each(function (i,n){
+					$.post("/standardItems/update/"+d.id,{id:$('#id'+i).val(),price:$('#price'+i).val()},function(val){console.log(i+"   "+val);});
+				});  
+				alert("更新成功");
+			},
+			error:function(xhr, type){
+				alert("保存失败");
+			}
+		})
+	});
+	
+	
+	//$("body").click(function(){alert($("#standardId").val());});
+});
+
+
+
 
 </script>
 
@@ -10,22 +38,29 @@
 				<th>年份</th>
 				<th>地区</th>
 			</tr>
-		</thead>
+		</thead> 
 	   <tbody>
 	     <tr>
-	        <td>{{pagePara.name}}</td>
-	        <td>{{pagePara.year}}</td>
-	        <td>{{pagePara.area=='1'?'甘肃':''}}
-				{{pagePara.area=='2'?'贵州':''}}
-				{{pagePara.area=='3'?'河南':''}}
-				{{pagePara.area=='4'?'江西':''}}
-				{{pagePara.area=='5'?'辽宁':''}}
-				{{pagePara.area=='6'?'宁夏':''}}  
-				{{pagePara.area=='7'?'陕西':''}}
-				{{pagePara.area=='8'?'四川':''}}
-				{{pagePara.area=='9'?'新疆':''}}
-				{{pagePara.area=='10'?'浙江':''}}
-				{{pagePara.area=='11'?'重庆':''}}      
+	        <td><input type="text" id="name" name="name" value="{{pagePara.name}}"/>
+	        	<input type="hidden" id="standardId" name="standardId" value="{{pagePara.id}}" />
+	        </td>
+	        <td><input type="text" id="year" name="year" value="{{pagePara.year}}"/>
+				 <input type="hidden" id="property" name="property" value="{{pagePara.property}}" />	
+	        </td>
+	        <td>
+	        	<select id="area" name="area">
+		        <option value="1">甘肃</option>
+		        <option value="2" >贵州</option>
+		        <option value="3">河南</option>
+		        <option value="4">江西</option>
+		        <option value="5">辽宁</option>
+		        <option value="6">宁夏</option>
+		        <option value="7">陕西</option>
+		        <option value="8">四川</option>
+		        <option value="9">新疆</option>
+		        <option value="10">浙江</option>
+		        <option value="11">重庆</option>
+	      	    </select>
 	        </td>
 	     </tr>
 	   </tbody>
@@ -33,7 +68,7 @@
     </table>
     
     <div align="center">
-		<button type="submit" class="btn btn-primary" type="button" >保存</button>
+		<button type="button" class="btn btn-primary" type="button" id="update">保存</button>
 		<button type="button" class="btn btn-success" name="backid" id="backid" ng-click="backMain();">返回列表</button>
 	</div>
 	
@@ -52,7 +87,9 @@
 					<td>{{p.item.no}}</td>
 					<td>{{p.item.name}}</td>
 					<td>{{p.item.parentName}}</td>
-					<td><input id="price" name="price" value="{{p.price}}"/></td>
+					<td><input id="price{{$index}}" name="price" value="{{p.price}}"/>
+					 	<input type="hidden" name="id" id="id{{$index}}" value="{{p.id}}"/>
+					 	
 					<td>{{p.item.moneyType}}</td>
 					<td>
 						{{p.item.numeraire=='1'?'m³':''}}
@@ -66,32 +103,3 @@
 	 			
 	</table>
 
-<script>
-/* $(function(){
-$.get("/standards/",function(data1){
-	//alert(data1[2].area);
-	
-	 for(var i = 0; i < data1.length; i++) {
-		 var a =	
-		 "<tr>"+
-			"<td>"+data1[i].name+"</td>"+
-			"<td>"+data1[i].year+"</td>";
-			if(data1[i].area == '1'){a += "<td>甘肃</td>";}else if
-			(data1[i].area == '2'){a += "<td>贵州</td>";}else if
-			(data1[i].area == '3'){a += "<td>河南</td>";}else if
-			(data1[i].area == '4'){a += "<td>江西</td>";}else if
-			(data1[i].area == '5'){a += "<td>辽宁</td>";}else if
-			(data1[i].area == '6'){a += "<td>宁夏</td>";}else if
-			(data1[i].area == '7'){a += "<td>陕西</td>";}else if
-			(data1[i].area == '8'){a += "<td>四川</td>";}else if
-			(data1[i].area == '9'){a += "<td>新疆</td>";}else if
-			(data1[i].area == '10'){a += "<td>浙江</td>";}else if
-			(data1[i].area == '11'){a += "<td>重庆</td>";}else{
-				a = a + "<td></td>";
-			}
-		a += "</tr>";
-			$("#x").append($(a));
-	}
-}) 
-}); */
-</script>

@@ -47,13 +47,15 @@ public class StandardItemController {
 		return "success";
 	}
 	
-
-	
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public StandardItem updateStandardItem(@RequestBody StandardItem entity, @PathVariable Integer id){
-		entity.setId(id);
-		return standardItemRepository.saveAndFlush(entity);
+	@RequestMapping(value = "/update/{standardId}", method = RequestMethod.POST)
+	public String updateStandardItem(@PathVariable Integer standardId,Integer id, Double price){
+		StandardItem standardItem = standardItemRepository.findOne(id);
+		standardItem.setPrice(price);
+		//System.out.println("aaaaaaaaa");
+		standardItemRepository.saveAndFlush(standardItem);
+		return "success";
 	}
+
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public void deleteStandardItem(@PathVariable Integer id){
