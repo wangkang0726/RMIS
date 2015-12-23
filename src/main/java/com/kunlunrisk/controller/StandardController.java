@@ -47,17 +47,18 @@ public class StandardController {
 	public Standard addStandard(@RequestBody Standard standard){
 		standard.setId(null);
 		Standard s = standardRepository.saveAndFlush(standard);
-		List<Item> items = itemRepository.findAll();
-		List<StandardItem> sItems = new ArrayList<StandardItem>();
-		for(Item item : items){
-			StandardItem si = new StandardItem();
-			si.setItem(item);
-			si.setStandardId(s.getId());
-			sItems.add(si);
-		}
-		standardItemRepository.save(sItems);
-		s.setItem(sItems);
-		standardRepository.saveAndFlush(standard);
+//		List<Item> items = itemRepository.findAll();
+//		List<StandardItem> sItems = new ArrayList<StandardItem>();
+//		for(Item item : items){
+//			StandardItem si = new StandardItem();
+//			si.setItem(item);
+//			si.setStandardId(s.getId());
+//			sItems.add(si);
+//		}
+//		standardItemRepository.save(sItems);
+//		s.setItem(sItems);
+//		standardRepository.saveAndFlush(standard);
+//		System.out.println("bbbbbbbbbbbbbbbbbb");
 		return s;
 	}
 	

@@ -1,4 +1,4 @@
- 
+ <meta charset="UTF-8">
 <script type="text/javascript">
 $(function(){
 	$('#save').click(function (){
@@ -9,36 +9,14 @@ $(function(){
 				contentType: "application/json",
 				dataType: 'json',
 				success:function(data){
-				/* 	
+				var d = eval(data);
 				    $('input[name=price]').each(function (i,n){
-						$.post("/standardItems/add/"+d.id,{itemId:$('#itemId'+i).val(),price:$('#price').val()},function(val){});
+						$.post("/standardItems/add/"+d.id,{itemId:$('#itemId'+i).val(),price:$('#price'+i).val()},function(val){console.log(i+"   "+val);});
 					});  
 				  
 					//price:$(n).val()}
 			
-				    $.ajax({url:"/standardItems/add/"+ d.id,
-						type:'POST',
-						data: JSON.stringify({price:$({price:$('.price',$(this)).val(), standardId:$("#standardId").val(), itemId:$('.itemId',$(this)).val()}),
-						contentType: "application/json",
-						dataType: 'json',
-						success:function(d){
-							
-						}
-					});   
-				  */
-				    $('.dt').each(function(){
-				    	alert($('.price', $(this)).val());
-						 $.ajax({url:"/standardItems/add/"+ d.id,
-							type:'POST',
-							data: JSON.stringify({price:$('.price',$(this)).val()}),
-							contentType: "application/json",
-							dataType: 'json',
-							success:function(d){
-								
-							}
-						}); 
-					});
-					 alert("ok！！")
+					 alert("ok！！");
 				     
 				},
 				error: function(xhr, type){
@@ -132,10 +110,11 @@ $(function(){
 	
 	<script>
 	
-	/* 	$("#save").click(function(){
+	/* 	
+	$("#save").click(function(){
 			
 			//alert("okkk");
-			$.ajax({url:"/standards",
+		/*	$.ajax({url:"/standards",
 				type:'POST',
 				data: JSON.stringify({name:$("#name").val(),year:$("#year").val(),area:$("#area").val(),property:$("#property").val() }),
 				contentType: "application/json",
@@ -290,6 +269,30 @@ $(function(){
 	
 	
 	*/
+	/* 
+    $.ajax({url:"/standardItems/add/"+ d.id,
+		type:'POST',
+		data: JSON.stringify({price:$({price:$('.price',$(this)).val(), standardId:$("#standardId").val(), itemId:$('.itemId',$(this)).val()}),
+		contentType: "application/json",
+		dataType: 'json',
+		success:function(d){
+			
+		}
+	});   
+ 
+    $('.dt').each(function(){
+    	alert($('.price', $(this)).val());
+		 $.ajax({url:"/standardItems/add/"+ d.id,
+			type:'POST',
+			data: JSON.stringify({price:$('.price',$(this)).val()}, standardId:$("#standardId").val(), itemId:$('.itemId',$(this)).val()}),
+			contentType: "application/json",
+			dataType: 'json',
+			success:function(d){
+				
+			}
+		}); 
+	}); 
+    */
 	
 	</script>
 

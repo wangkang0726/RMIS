@@ -35,7 +35,7 @@
 <script type="text/javascript">
 function openPage(url,id){
 	var scope = angular.element($("#mainCtrl")).scope()
-	$.get("/standards/get/items/" + id,function(data){
+	$.get("/standards/get/" + id,function(data){
 		scope.goDetail(url,data);
 		scope.$apply();
 	});
@@ -61,15 +61,6 @@ function getItemData(){
 		});
 }
 
-
-
-
-
-
-	/* $.post("/standards/add",{},function(data){
-		alert(data);
-		//goAdd('standard/add.html')
-	}); */
 
 	$(function(){
 		$.get("/standards",function(data){console.log("11"+data);
@@ -113,7 +104,8 @@ function getItemData(){
 		}) 
 	});
 
-	/* function add(){
+	/* 
+	function add(){
 	 $.ajax({url:"/standards/add",
 		type:'POST',
 		data: JSON.stringify({name:$("#name").val(),year:$("#year").val(),area:$("#area").val(),property:$("#property").val() }),
@@ -130,5 +122,7 @@ function getItemData(){
 		}
 	
 	});
-} */
+	} 
+	*/
+	
 </script>

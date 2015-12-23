@@ -36,12 +36,15 @@ public class StandardItemController {
 	}
 	
 	@RequestMapping(value = "/add/{standardId}", method = RequestMethod.POST)
-	public StandardItem addStandardItem(@RequestBody StandardItem standardItem, @PathVariable Integer standardId,@Param(value = "itemId") Integer itemId,@Param(value = "price") Double price){
+	public String addStandardItem(@PathVariable Integer standardId,Integer itemId,Double price){
+		StandardItem standardItem = new StandardItem();
 		standardItem.setId(null);
 		standardItem.setStandardId(standardId);
 		standardItem.setItem(itemRepository.getOne(itemId));
 		standardItem.setPrice(price);
-		return standardItemRepository.saveAndFlush(standardItem);
+		//System.out.println("aaaaaaaaa");
+		standardItemRepository.saveAndFlush(standardItem);
+		return "success";
 	}
 	
 
