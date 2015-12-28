@@ -1,69 +1,83 @@
-<!DOCTYPE html>
-<html>
-<head>
-<script type="text/javascript" src="../../js/jquery-2.1.4.js"></script>
-<title></title>
 <meta charset="UTF-8">
-<script type="text/javascript">
-	$(function(){
-		$.get("/models",function(data){
-			//alert(data[1].property);   //+'<a href="standard/edit.html">详情>>></a>'
-			
-			 for(var i = 0; i < data.length; i++){
-				var tmp = "<tr>"+
-					"<td>"+data[i].name+"</td>"+
-					"<td>"+data[i].date1+"</td>"+
-					"<td>"+data[i].expectPrice+"</td>"+
-					"<td>"+data[i].realPrice +"</td>"+
-					"<td>"+data[i].accountName+"</td>"
-					"</tr>";
-					$("#dataTable").append($(tmp));
-			}
-		}) 
-	});
-
-
-
-</script>
-</head>
-<body>
-<table>
+<table class="table table-bordered table-sm">
 	<tr>
-       <td>公估项目名称：</td>
-       <td><input type="text" name="name" value=""/></td>
-	
-       <td>使用标准：</td>
-       <td><input type="text" name="standard" value=""/></td>
-	
-       <td>地区：</td>
-       <td><input type="text" name="area" value=""/></td>
-       
-   </tr>
-</table>
-   
-	 	<div align="center">
-            <button type="submit" class="btn btn-primary" type="button">查询</button> 
-            <button type="submit" class="btn btn-primary" type="button">清空</button> 
-            <button type="button" class="btn btn-success" id="newNav" ng-click="goAdd('project/add.html')">新增</button>
-		</div>
-   
-<table class="table table-bordered table-sm" id="dataTable">
-<thead class="thead-inverse">
-	<tr>
-		<th>公估项目名称</th>
-		<th>核算日期</th>
-		<th>核算损失金额（元）</th>
-		<th>实际损失金额（元）</th>
-		<th>核算人员</th>
-		<th>操作</th>
+		<td>公估项目名称：</td>
+		<td><input type="text" name="name" value="" /></td>
+
+		<td>使用标准：</td>
+		<td><input type="text" name="standard" value="" /></td>
+
+		<td>地区：</td>
+		<td><input type="text" name="area" value="" /></td>
+
 	</tr>
-</thead>
-         <tr >
-         	<td style="vertical-align:middle;">**公司地震致损</td>
-            <td style="vertical-align:middle;">2013-04-24</td>
-            <td style="vertical-align:middle;">130000</td>
-            <td style="vertical-align:middle;">26000</td>
-            <td style="vertical-align:middle;">小红</td>
-            <td style="vertical-align:middle;"><a ng-click="goDetail('project/edit.html')" href="javascript:void(0);">详情>>></a></td>
-         </tr>
 </table>
+
+<div align="center">
+	<button type="submit" class="btn btn-primary" type="button">查询</button>
+	<button type="submit" class="btn btn-primary" type="button">清空</button>
+	<button type="button" class="btn btn-success" id="newNav" onclick="getData()">添加新标准</button>
+</div>
+
+<table class="table table-bordered table-sm" id="dataTable">
+	<thead class="thead-inverse">
+		<tr>
+			<th>公估项目名称</th>
+			<th>核算日期</th>
+			<th>核算损失金额（元）</th>
+			<th>实际损失金额（元）</th>
+			<th>核算人员</th>
+		</tr>
+	</thead>
+
+</table>
+
+<script type="text/javascript">
+	function openPage(url, id) {
+		var scope = angular.element($("#mainCtrl")).scope()
+		$.get("/projects/get/" + id, function(data) {
+			scope.goDetail(url, data);
+			scope.$apply();
+		});
+	}
+
+ 	function getData() {
+		/* $.ajax({
+			url : "/projects/getData",
+			type : 'get',
+			contentType : "application/json",
+			dataType : 'json',
+			success : function(data) {
+				var scope = angular.element($("#mainCtrl")).scope()
+				scope.goAdd('project/add.html', data);
+				scope.$apply();
+			},
+
+			error : function(xhr, type) {
+				alert("获取失败！");
+			}
+
+		}); */
+		
+		var scope = angular.element($("#mainCtrl")).scope()
+		scope.goAdd('project/add.html', {});
+		scope.$apply();
+	} 
+
+	$(function() {
+		$.get("/projects", function(data) {
+			for (var i = 0; i < data.length; i++) {
+				var tmp = "<tr>"
+						+ "<td><a onclick=\"openPage('project/edit.html',"+ data[i].id + ")\" href='javascript:void(0);'>"+ data[i].name + "</a></td>" 
+						+ "<td>"+ data[i].accountDate + "</td>"
+						+ "<td> </td>"
+						+ "<td> </td>"
+						+ "<td>"+ data[i].userName + "</td>"
+
+				tmp += "</tr>";
+
+				$("#dataTable").append($(tmp));
+			}
+		})
+	});
+</script>

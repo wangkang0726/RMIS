@@ -1,24 +1,24 @@
+<meta charset="UTF-8">
+<table class="table table-bordered table-sm">
+	<tr>
+		<td>名称：</td>
+		<td><input type="text" name="name" value="" /></td>
 
-  <table > 
-  <tr>
-       <td>名称：</td>
-       <td><input type="text" name="name" value=""/></td>
-	
-       <td>年份：</td>
-       <td><input type="text" name="year" value=""/></td>
-	
-       <td>地区：</td>
-       <td><input type="text" name="area" value=""/></td>
-       
-   </tr>
-  </table> 
-  
-  <div align="center">
-      <button type="submit" class="btn btn-primary" type="button">查询</button> 
-      <button type="submit" class="btn btn-primary" type="button">清空</button> 
-      <button type="button" class="btn btn-success" id="newNav" onclick="getItemData()">添加新标准</button>
-  </div>
-  
+		<td>年份：</td>
+		<td><input type="text" name="year" value="" /></td>
+
+		<td>地区：</td>
+		<td><input type="text" name="area" value="" /></td>
+
+	</tr>
+</table>
+
+<div align="center">
+	<button type="submit" class="btn btn-primary" type="button">查询</button>
+	<button type="submit" class="btn btn-primary" type="button">清空</button>
+	<button type="button" class="btn btn-success" id="newNav" onclick="getItemData()">添加新标准</button>
+</div>
+
 <table class="table table-bordered table-sm" id="dataTable">
 	<thead class="thead-inverse">
 		<tr>
@@ -28,80 +28,104 @@
 			<th>项目性质</th>
 		</tr>
 	</thead>
-        
+
 </table>
 
 
 <script type="text/javascript">
-function openPage(url,id){
-	var scope = angular.element($("#mainCtrl")).scope()
-	$.get("/standards/get/" + id,function(data){
-		scope.goDetail(url,data);
-		scope.$apply();
-	});
-}
+	function openPage(url, id) {
+		var scope = angular.element($("#mainCtrl")).scope()
+		$.get("/standards/get/" + id, function(data) {
+			scope.goDetail(url, data);
+			scope.$apply();
+		});
+	}
 
-
-
-function getItemData(){
-	 $.ajax({url:"/standards/getItemData",
-			type:'get',
-			contentType: "application/json",
-			dataType: 'json',
-			success:function(data){
+	function getItemData() {
+		$.ajax({
+			url : "/standards/getItemData",
+			type : 'get',
+			contentType : "application/json",
+			dataType : 'json',
+			success : function(data) {
 				var scope = angular.element($("#mainCtrl")).scope()
-				scope.goAdd('standard/add.html',data);
+				scope.goAdd('standard/add.html', data);
 				scope.$apply();
 			},
-		
-			error: function(xhr, type){
+
+			error : function(xhr, type) {
 				alert("保存失败！");
 			}
-		
+
 		});
-}
+	}
 
-
-	$(function(){
-		$.get("/standards",function(data){
+	$(function() {
+		$.get("/standards", function(data) {
 			//alert(data[1].property);   //+'<a href="standard/edit.html">详情>>></a>'
 			//if(data[i].item.numeraire == '1') {tmp += "<td>m³</td>";}else if
-			 for(var i = 0; i < data.length; i++){
-				 data[i].property = data[i].property==null ? "" : data[i].property;
-				var tmp = "<tr>"+
-					"<td><a onclick=\"openPage('standard/edit.html',"+data[i].id+")\" href='javascript:void(0);'>"+data[i].name+"</a></td>"+
-					"<td>"+data[i].year+"</td>";
-					if(data[i].area == '1'){tmp += "<td>甘肃</td>";}else if
-					(data[i].area == '2'){tmp += "<td>贵州</td>";}else if
-					(data[i].area == '3'){tmp += "<td>河南</td>";}else if
-					(data[i].area == '4'){tmp += "<td>江西</td>";}else if
-					(data[i].area == '5'){tmp += "<td>辽宁</td>";}else if
-					(data[i].area == '6'){tmp += "<td>宁夏</td>";}else if
-					(data[i].area == '7'){tmp += "<td>陕西</td>";}else if
-					(data[i].area == '8'){tmp += "<td>四川</td>";}else if
-					(data[i].area == '9'){tmp += "<td>新疆</td>";}else if
-					(data[i].area == '10'){tmp += "<td>浙江</td>";}else if
-					(data[i].area == '11'){tmp += "<td>重庆</td>";}else{
-						tmp = tmp + "<td></td>";
-					}
-					if(data[i].property == '1'){tmp += "<td>统筹型</td>";}else if
-					(data[i].property == '2'){tmp += "<td>市场化-非股东</td>";}else if
-					(data[i].property == '3'){tmp += "<td>市场化-参控股</td>";}else if
-					(data[i].property == '4'){tmp += "<td>市场化-员工福利</td>";}else if
-					(data[i].property == '5'){tmp += "<td>市场化-再保险</td>";}else if
-					(data[i].property == '6'){tmp += "<td>市场化-海外业务</td>";}else if
-					(data[i].property == '7'){tmp += "<td>市场化-全资新险种</td>";}else if
-					(data[i].property == '8'){tmp += "<td>市场化-其他</td>";}else if
-					(data[i].property == '9'){tmp += "<td>市场化-风险咨询</td>";}else if
-					(data[i].property == '10'){tmp += "<td>公估-中石油业务</td>";}else if
-					(data[i].property == '11'){tmp += "<td>公估-非中石油业务</td>";}else{
-						tmp = tmp + "<td></td>";
-					}
-					tmp += "</tr>";
-					
-					$("#dataTable").append($(tmp));
+			for (var i = 0; i < data.length; i++) {
+				data[i].property = data[i].property == null ? ""
+						: data[i].property;
+				var tmp = "<tr>"
+						+ "<td><a onclick=\"openPage('standard/edit.html',"+ data[i].id + ")\" href='javascript:void(0);'>"
+						+ data[i].name + "</a></td>" + "<td>" + data[i].year
+						+ "</td>";
+				if (data[i].area == '1') {
+					tmp += "<td>甘肃</td>";
+				} else if (data[i].area == '2') {
+					tmp += "<td>贵州</td>";
+				} else if (data[i].area == '3') {
+					tmp += "<td>河南</td>";
+				} else if (data[i].area == '4') {
+					tmp += "<td>江西</td>";
+				} else if (data[i].area == '5') {
+					tmp += "<td>辽宁</td>";
+				} else if (data[i].area == '6') {
+					tmp += "<td>宁夏</td>";
+				} else if (data[i].area == '7') {
+					tmp += "<td>陕西</td>";
+				} else if (data[i].area == '8') {
+					tmp += "<td>四川</td>";
+				} else if (data[i].area == '9') {
+					tmp += "<td>新疆</td>";
+				} else if (data[i].area == '10') {
+					tmp += "<td>浙江</td>";
+				} else if (data[i].area == '11') {
+					tmp += "<td>重庆</td>";
+				} else {
+					tmp = tmp + "<td></td>";
+				}
+				if (data[i].property == '1') {
+					tmp += "<td>统筹型</td>";
+				} else if (data[i].property == '2') {
+					tmp += "<td>市场化-非股东</td>";
+				} else if (data[i].property == '3') {
+					tmp += "<td>市场化-参控股</td>";
+				} else if (data[i].property == '4') {
+					tmp += "<td>市场化-员工福利</td>";
+				} else if (data[i].property == '5') {
+					tmp += "<td>市场化-再保险</td>";
+				} else if (data[i].property == '6') {
+					tmp += "<td>市场化-海外业务</td>";
+				} else if (data[i].property == '7') {
+					tmp += "<td>市场化-全资新险种</td>";
+				} else if (data[i].property == '8') {
+					tmp += "<td>市场化-其他</td>";
+				} else if (data[i].property == '9') {
+					tmp += "<td>市场化-风险咨询</td>";
+				} else if (data[i].property == '10') {
+					tmp += "<td>公估-中石油业务</td>";
+				} else if (data[i].property == '11') {
+					tmp += "<td>公估-非中石油业务</td>";
+				} else {
+					tmp = tmp + "<td></td>";
+				}
+				tmp += "</tr>";
+
+				$("#dataTable").append($(tmp));
 			}
-		}) 
+		})
 	});
 
 	/* 
@@ -123,5 +147,5 @@ function getItemData(){
 	
 	});
 	} 
-	*/
+	 */
 </script>

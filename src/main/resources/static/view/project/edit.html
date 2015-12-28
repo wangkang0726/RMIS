@@ -1,5 +1,32 @@
-<meta charset="utf-8" />
+<meta charset="UTF-8">
+<script>
 
+$(function(){
+	$('#update').click(function(){
+		$.ajax({
+			url:"/projects/"+$("#projectId").val(),
+			type:'PUT',
+			data:JSON.stringify({name:$("#name").val(),year:$("#year").val(),area:$("#area").val(),property:$("#property").val()}),
+			contentType: "application/json",
+			dataType: 'json',
+			success:function(data){
+				var d = eval(data);
+			    $('input[name=price]').each(function (i,n){
+					$.post("/standardItems/update/"+d.id,{id:$('#id'+i).val(),price:$('#price'+i).val()},function(val){console.log(i+"   "+val);});
+				});  
+				alert("更新成功");
+			},
+			error:function(xhr, type){
+				alert("保存失败");
+			}
+		})
+	});
+	
+	
+});
+
+</script>
+<table>
   	<tr>
         <td>公估项目名称</td>
         <td><input type="text" name="name" value="2012年北京标准"/></td>
@@ -12,7 +39,7 @@
         <td>地区</td>
         <td><select ><option>北京</option><option>浙江</option><option>甘肃</option><option>辽宁</option><option>新疆</option></select></td>
     </tr>
-		  <hr></hr>  
+</table> 
 	<table class="table table-bordered table-sm" id="table">
 			<thead class="thead-inverse">
 			 <tr>
@@ -25,49 +52,10 @@
 		    </tr>
 			</thead>
 		
-	 		<tr >
-	            <td >光缆</td>
-	            <td ><select ><option>2012年陕西标准</option><option>2013年陕西标准</option><option>2014年陕西标准</option><option>2015年陕西标准</option><option>2016年陕西标准</option></select></td>
-	            <td ><input type="text" name="" value="10"/></td>
-	            <td ><input type="text" name="" value="5"/></td>
-	            <td >50</td>
-	            <td ><input type="text" name="price" value="70"/></td>
-         	</tr>
-         	<tr >
-	            <td >干砌石</td>
-	            <td ><select ><option>2012年陕西标准</option><option>2013年陕西标准</option><option>2014年陕西标准</option><option>2015年陕西标准</option><option>2016年陕西标准</option></select></td>
-	            <td ><input type="text" name="" value="10"/></td>
-	            <td ><input type="text" name="" value="5"/></td>
-	            <td >50</td>
-	            <td ><input type="text" name="price" value="60"/></td>
-         	</tr>
-         	<tr >
-	            <td >草袋</td>
-	            <td ><select ><option>2012年陕西标准</option><option>2013年陕西标准</option><option>2014年陕西标准</option><option>2015年陕西标准</option><option>2016年陕西标准</option></select></td>
-	          	<td ><input type="text" name="" value="10"/></td>
-	            <td ><input type="text" name="" value="5"/></td>
-	            <td >50</td>
-	            <td ><input type="text" name="price" value="30"/></td>
-         	</tr>
-         	<tr >
-	            <td >钢管</td>
-	            <td ><select ><option>2012年陕西标准</option><option>2013年陕西标准</option><option>2014年陕西标准</option><option>2015年陕西标准</option><option>2016年陕西标准</option></select></td>
-	            <td ><input type="text" name="" value="10"/></td>
-	            <td ><input type="text" name="" value="5"/></td>
-	            <td >50</td>
-	            <td ><input type="text" name="price" value="80"/></td>
-         	</tr>
-         	<tr >
-	            <td >管道防腐</td>
-	            <td ><select ><option>2012年陕西标准</option><option>2013年陕西标准</option><option>2014年陕西标准</option><option>2015年陕西标准</option><option>2016年陕西标准</option></select></td>
-	            <td ><input type="text" name="" value="10"/></td>
-	            <td ><input type="text" name="" value="5"/></td>
-	            <td >50</td>
-	            <td ><input type="text" name="price" value="50"/></td>
-         	</tr>
-	<table>
+	 		
+	</table>
 	
-	<center>
+	<div align="center">
 		<button type="submit" class="btn btn-primary" type="button" >保存</button>
 		<button type="button" class="btn btn-success" name="backid" id="backid" ng-click="backMain();">返回列表</button>
-	</center>
+	</div>

@@ -7,7 +7,7 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.GenericGenerator;
 
-@Entity(name="T_ITEM")
+@Entity(name="R_ITEM")
 public class Item {
   @Id
   @GeneratedValue(generator = "custom-id")

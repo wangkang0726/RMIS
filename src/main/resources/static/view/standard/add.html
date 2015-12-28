@@ -26,7 +26,7 @@ $(function(){
 });
 
 </script>
-<table>
+<table class="table table-bordered table-sm">
   	<tr>
         <td>名称：</td>
         <td><input type="text" name="name" id="name"/></td>
@@ -84,7 +84,7 @@ $(function(){
 				<tr ng-repeat="item in pagePara"  class="dt">
 					<td>{{item.no}}</td>
 					<td>{{item.name}}</td>
-					<td>{{item.parent}}</td>
+					<td>{{item.parentName}}</td>
 					<td>
 					   <input type="text" name="price" id="price{{$index}}" value=""/>
 					   <input type="hidden" name="itemId" id="itemId{{$index}}" value="{{item.id}}"/>

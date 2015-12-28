@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.GenericGenerator;
-@Entity(name="T_STANDARD_ITEM")
+@Entity(name="R_STANDARD_ITEM")
 public class StandardItem {
 
   @Id

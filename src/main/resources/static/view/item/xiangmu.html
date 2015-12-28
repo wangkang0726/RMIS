@@ -48,6 +48,7 @@ body {
 			
 			for(var i = 0; i < data.length; i++){
 				data[i].parentName = data[i].parentName==null ? "" : data[i].parentName;
+				data[i].moneyType = data[i].moneyType==null ? "" : data[i].moneyType;
 				var tmp = "<tr>"+
 								"<td>"+data[i].no +"</td>"+
 								"<td>"+data[i].name+"</td>"+
@@ -60,7 +61,7 @@ body {
 									(data[i].numeraire == '4'){tmp += "<td>个</td>"}else if
 									(data[i].numeraire == '5'){tmp += "<td>根</td>"}else if
 									(data[i].numeraire == '6'){tmp += "<td>吨</td>"}else {
-													tmp = tmp+ "<td>无</td>" ;
+													tmp = tmp+ "<td></td>" ;
 								}
 										
 						  tmp += "</tr>";
@@ -277,7 +278,7 @@ body {
 					tmp.open = true;
 					//if(i<5)
 					//alert(data[i].parent + "|" + (data[i].parent == 0));
-					if(data[i].parent == 0){
+					if(data[i].parent == null){
 						tmp.isParent = true;
 					} else {
 						tmp.isParent = false;
