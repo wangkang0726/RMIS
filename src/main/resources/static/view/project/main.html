@@ -66,12 +66,13 @@
 
 	$(function() {
 		$.get("/projects", function(data) {
+			console.log(data);	
 			for (var i = 0; i < data.length; i++) {
 				var tmp = "<tr>"
 						+ "<td><a onclick=\"openPage('project/edit.html',"+ data[i].id + ")\" href='javascript:void(0);'>"+ data[i].name + "</a></td>" 
 						+ "<td>"+ data[i].accountDate + "</td>"
-						+ "<td> </td>"
-						+ "<td> </td>"
+						+ "<td>" +data[i].expectTotal+"</td>"
+						+ "<td>"+data[i].realTotal+ "</td>"
 						+ "<td>"+ data[i].userName + "</td>"
 
 				tmp += "</tr>";

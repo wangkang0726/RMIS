@@ -54,5 +54,6 @@ public class C1C {
 	private Date createDate;
 	@Column
 	private double input;
-
+	
+	
 }

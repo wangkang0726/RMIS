@@ -24,6 +24,10 @@ public class Project {
 	private Date accountDate; // 核算日期
 	@Column
 	private String userName; // 核算人员
+	@Column
+	private Double expectTotal; // 核算损失金额
+	@Column
+	private Double realTotal; // 实际损失金额
 
 	@OneToMany(targetEntity = ProjectItem.class, mappedBy = "projectId", fetch = FetchType.LAZY)
 	private List<ProjectItem> projectItem;
@@ -69,6 +73,22 @@ public class Project {
 
 	public void setProjectItem(List<ProjectItem> projectItem) {
 		this.projectItem = projectItem;
+	}
+
+	public Double getExpectTotal() {
+		return expectTotal;
+	}
+
+	public void setExpectTotal(Double expectTotal) {
+		this.expectTotal = expectTotal;
+	}
+
+	public Double getRealTotal() {
+		return realTotal;
+	}
+
+	public void setRealTotal(Double realTotal) {
+		this.realTotal = realTotal;
 	}
 
 

@@ -17,14 +17,18 @@ public class ProjectItem {
 	private Integer id;
 	@Column
 	private Integer projectId;
-	@Column
-	private Double price; // 价格
+
 	@Column
 	private Double amount; // 损失数量
+
+	@Column
+	private Double referencePrice; // 参考金额
 	@Column
 	private Double realPrice; // 实际损失金额
-	@Column
-	private Double expectPrice; // 核算损失金额
+	// @Column
+	// private Double expectTotal; // 核算损失金额
+	// @Column
+	// private Double realTotal; // 实际损失金额
 	@ManyToOne
 	private Standard standard;
 
@@ -34,14 +38,6 @@ public class ProjectItem {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Double getPrice() {
-		return price;
-	}
-
-	public void setPrice(Double price) {
-		this.price = price;
 	}
 
 	public Integer getProjectId() {
@@ -76,15 +72,12 @@ public class ProjectItem {
 		this.standard = standard;
 	}
 
-	public Double getExpectPrice() {
-		return expectPrice;
+	public Double getReferencePrice() {
+		return referencePrice;
 	}
 
-	public void setExpectPrice(Double expectPrice) {
-		this.expectPrice = expectPrice;
+	public void setReferencePrice(Double referencePrice) {
+		this.referencePrice = referencePrice;
 	}
-
-
-	
 
 }

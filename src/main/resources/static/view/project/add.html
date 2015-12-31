@@ -1,19 +1,35 @@
 <meta charset="UTF-8">
 <script type="text/javascript">
+var expectTotal = 0;
+var realTotal = 0;
 $(function(){
 	$('#save').click(function (){
 		
+		  
+			<!--获取实际总额-->
+			$("input[id*='realPrice']").each(function(i,n){
+				
+				var realPrice = $("#realPrice"+i).val();
+				if(realPrice==null||realPrice==""){
+					realPrice=0;
+				} ;
+				realTotal += realPrice*1;
+			});	
+			
+			
+		 //提交
 			$.ajax({url:"/projects/add",
 				type:'POST',
-				data: JSON.stringify({name:$("#name").val()}),
+				data: JSON.stringify({name:$("#name").val(),accountDate:"2015-12-29",userName:"小明",expectTotal:expectTotal,realTotal:realTotal}),
 				contentType: "application/json",
 				dataType: 'json',
-				success:function(){
-				/* var d = eval(data);
-				    $('input[name=price]').each(function (i,n){
-						$.post("/projectItems/add/"+d.id,{itemId:$('#itemId'+i).val(),price:$('#price'+i).val()},function(val){console.log(i+"   "+val);});
+				success:function(p){
+				 var p = eval(p);
+				    $("input[id*='amount']").each(function (i,n){
+						$.post("/projectItems/add/"+p.id,{amount:$('#amount'+i).val(),realPrice:$('#realPrice'+i).val(),
+							referencePrice:$('#referencePrice'+i).val()});
 					});  
-				   */
+				   
 					 alert("ok！！");
 				},
 				error: function(xhr, type){
@@ -21,6 +37,7 @@ $(function(){
 				}
 			
 			});
+		  
 	});
 });
 
@@ -39,25 +56,62 @@ $(document).ready(function() {
 	
 	
 	$('#standard').change(function (){
-		$.get("standards/get/"+$(this).val(),function(data){
-			  var data = eval(data);
-			  console.log(data);
-			  alert(3333333333333);
-			  for(var i=0; i<data.length; i++){
-				  alert(data[i].name);
-				}
-			  alert(3111111);
+		  expectTotal = 0;
+		   realTotal = 0;
+		$("#tbodyId").html("");
+		$.get("standards/get/"+$(this).val(),function(d){
+			  console.log(d+"xxxxx");
+					for(var i = 0; i <d.item.length ; i++){
+							 d.item[i].price = d.item[i].price==null ? "" : d.item[i].price;
+							 var tmp = "<tr>" +
+											"<td>"+d.item[i].item.name+"</td>"+
+											"<td>"+d.name+"</td>"+ 
+											"<td><input type=\"text\" name=\"amount\" value=\"\" id=\"amount"+i+"\" /></td>" +
+											"<td>"+d.item[i].price+"</td>" +
+											"<td></td>" +
+											"<td><input type=\"text\" name=\"realPrice\" value=\"\" id=\"realPrice"+i+"\" /></td>" +
+											"<td><input type=\"hidden\" name=\"referencePrice\" value=\"\" id=\"referencePrice"+i+"\"/></td>"+
+											"<td><input type=\"hidden\" name=\"id\" value=\"d.id\" id=\"standardId\"/></td>" +
+									  "</tr>";
+							$("#tbodyId").append($(tmp)); 
+						} ;
+					
+						$("input[id*='amount']").each(function(i,n){
+							 $(n).bind("blur",function(){
+									var unmulti = $("#referencePrice"+i).val();
+									if(unmulti==null||unmulti==""){
+										unmulti = 0;
+									}
+									
+									<!--参考金额 -->
+									$(n).parent().next().next().html(($(n).val()*1)*($(n).parent().next().text()*1));
+									var multi = ($(n).val()*1)*($(n).parent().next().text()*1);   
+									$("#referencePrice"+i).val(multi);   
+									<!--参考总额 -->
+									if(multi!=null&&multi!=""){
+										expectTotal += multi*1;    
+										expectTotal -= unmulti;
+										//console.log(expectTotal)
+									};
+									
+							}); 
+						});
+						
 		});
+		
 	});
-	
+
 });
+
 </script>
+
+<span id="msg"></span>
 <table class="table table-bordered table-sm">
   	<tr>
         <td>名称：</td>
         <td><input type="text" name="name" id="name"/></td>
-        <td>年份：</td>
-        <td><input type="text" name="year" id="year"/></td>
+        <!-- <td>年份：</td>
+        <td><input type="text" name="year" id="year"/></td> -->
         <td>地区：</td>
         <td>
 	     	<select id="area" name="area">
@@ -94,6 +148,8 @@ $(document).ready(function() {
 			        <th>实际损失金额</th>
 				</tr>
 			</thead>
+			<input type="hidden" name="expectTotal" id="expectTotal"  value=""/>
+			<input type="hidden" name="realTotal" id="realTotal"  value=""/>
 	<tbody id="tbodyId">
 		
 		<!-- <tr ng-repeat="d in pagePara|limitTo:1" >
