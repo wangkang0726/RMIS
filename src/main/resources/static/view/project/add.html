@@ -1,5 +1,6 @@
 <meta charset="UTF-8">
 <script type="text/javascript">
+
 var expectTotal = 0;
 var realTotal = 0;
 $(function(){
@@ -20,14 +21,15 @@ $(function(){
 		 //提交
 			$.ajax({url:"/projects/add",
 				type:'POST',
-				data: JSON.stringify({name:$("#name").val(),accountDate:"2015-12-29",userName:"小明",expectTotal:expectTotal,realTotal:realTotal}),
+				data: JSON.stringify({name:$("#name").val(),accountDate:2015-10-12,userName:"小明",expectTotal:expectTotal,realTotal:realTotal}),
 				contentType: "application/json",
 				dataType: 'json',
 				success:function(p){
 				 var p = eval(p);
 				    $("input[id*='amount']").each(function (i,n){
 						$.post("/projectItems/add/"+p.id,{amount:$('#amount'+i).val(),realPrice:$('#realPrice'+i).val(),
-							referencePrice:$('#referencePrice'+i).val()});
+							referencePrice:$('#referencePrice'+i).val(),standardId:$('#standardId'+i).val(),
+							itemId:$('#itemId'+i).val(),standardItemId:$('#standardItemId'+i).val()});
 					});  
 				   
 					 alert("ok！！");
@@ -40,7 +42,7 @@ $(function(){
 		  
 	});
 });
-
+<!--下拉菜单查询-->
 $(document).ready(function() {
 	$.ajax({
 		url : "/standards",
@@ -60,8 +62,12 @@ $(document).ready(function() {
 		   realTotal = 0;
 		$("#tbodyId").html("");
 		$.get("standards/get/"+$(this).val(),function(d){
-			  console.log(d+"xxxxx");
+			var x = new Date();
+			var str = x.getFullYear()+"-"+(x.getMonth()+1)+"-"+x.getDate();
+			alert(str);
+		
 					for(var i = 0; i <d.item.length ; i++){
+						
 							 d.item[i].price = d.item[i].price==null ? "" : d.item[i].price;
 							 var tmp = "<tr>" +
 											"<td>"+d.item[i].item.name+"</td>"+
@@ -69,11 +75,14 @@ $(document).ready(function() {
 											"<td><input type=\"text\" name=\"amount\" value=\"\" id=\"amount"+i+"\" /></td>" +
 											"<td>"+d.item[i].price+"</td>" +
 											"<td></td>" +
-											"<td><input type=\"text\" name=\"realPrice\" value=\"\" id=\"realPrice"+i+"\" /></td>" +
-											"<td><input type=\"hidden\" name=\"referencePrice\" value=\"\" id=\"referencePrice"+i+"\"/></td>"+
-											"<td><input type=\"hidden\" name=\"id\" value=\"d.id\" id=\"standardId\"/></td>" +
+											"<td><input type=\"text\" name=\"realPrice\" value=\"\" id=\"realPrice"+i+"\" />"+
+											"<input type=\"hidden\" name=\"referencePrice\" value=\"\" id=\"referencePrice"+i+"\"/>"+
+											"<input type=\"hidden\" name=\"standardId\" value=\""+d.id+"\" id=\"standardId"+i+"\"/>"+
+											"<input type=\"hidden\" name=\"itemId\" value=\""+d.item[i].item.id+"\" id=\"itemId"+i+"\"/>"+
+											"<input type=\"hidden\" name=\"accountDate\" value=\""+str+"\" id=\"accountDate"+i+"\"/>"+
+											"<input type=\"hidden\" name=\"standardItemId\" value=\""+d.item[i].id+"\" id=\"standardItemId"+i+"\"/></td>" +
 									  "</tr>";
-							$("#tbodyId").append($(tmp)); 
+							$("#tbodyId").append($(tmp));  
 						} ;
 					
 						$("input[id*='amount']").each(function(i,n){
@@ -108,11 +117,11 @@ $(document).ready(function() {
 <span id="msg"></span>
 <table class="table table-bordered table-sm">
   	<tr>
-        <td>名称：</td>
+        <td>项目名称：</td>
         <td><input type="text" name="name" id="name"/></td>
         <!-- <td>年份：</td>
         <td><input type="text" name="year" id="year"/></td> -->
-        <td>地区：</td>
+        <!-- <td>地区：</td>
         <td>
 	     	<select id="area" name="area">
 		        <option value="1">甘肃</option>
@@ -127,7 +136,7 @@ $(document).ready(function() {
 		        <option value="10">浙江</option>
 		        <option value="11">重庆</option>
 	        </select>
-	     </td>
+	     </td> -->
 	     <td>使用标准:</td>
 	     <td>
 	     	<select id="standard" name="standard">

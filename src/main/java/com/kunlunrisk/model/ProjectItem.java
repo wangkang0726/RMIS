@@ -25,12 +25,13 @@ public class ProjectItem {
 	private Double referencePrice; // 参考金额
 	@Column
 	private Double realPrice; // 实际损失金额
-	// @Column
-	// private Double expectTotal; // 核算损失金额
-	// @Column
-	// private Double realTotal; // 实际损失金额
+
 	@ManyToOne
 	private Standard standard;
+	@ManyToOne
+	private Item item;
+	@ManyToOne
+	private StandardItem standardItem;
 
 	public Integer getId() {
 		return id;
@@ -78,6 +79,22 @@ public class ProjectItem {
 
 	public void setReferencePrice(Double referencePrice) {
 		this.referencePrice = referencePrice;
+	}
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
+	public StandardItem getStandardItem() {
+		return standardItem;
+	}
+
+	public void setStandardItem(StandardItem standardItem) {
+		this.standardItem = standardItem;
 	}
 
 }

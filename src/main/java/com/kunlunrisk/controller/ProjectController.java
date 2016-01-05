@@ -59,6 +59,7 @@ public class ProjectController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public Project updateProject(@RequestBody Project entity, @PathVariable Integer id) {
 		entity.setId(id);
+		
 		return projectRepository.saveAndFlush(entity);
 	}
 
