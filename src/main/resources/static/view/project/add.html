@@ -64,23 +64,23 @@ $(document).ready(function() {
 		$.get("standards/get/"+$(this).val(),function(d){
 			var x = new Date();
 			var str = x.getFullYear()+"-"+(x.getMonth()+1)+"-"+x.getDate();
-			alert(str);
+			//alert(str);
 		
-					for(var i = 0; i <d.item.length ; i++){
+					for(var i = 0; i <d.standardItem.length ; i++){
 						
-							 d.item[i].price = d.item[i].price==null ? "" : d.item[i].price;
+							 d.standardItem[i].price = d.standardItem[i].price==null ? "" : d.standardItem[i].price;
 							 var tmp = "<tr>" +
-											"<td>"+d.item[i].item.name+"</td>"+
+											"<td>"+d.standardItem[i].item.name+"</td>"+
 											"<td>"+d.name+"</td>"+ 
 											"<td><input type=\"text\" name=\"amount\" value=\"\" id=\"amount"+i+"\" /></td>" +
-											"<td>"+d.item[i].price+"</td>" +
+											"<td>"+d.standardItem[i].price+"</td>" +
 											"<td></td>" +
 											"<td><input type=\"text\" name=\"realPrice\" value=\"\" id=\"realPrice"+i+"\" />"+
 											"<input type=\"hidden\" name=\"referencePrice\" value=\"\" id=\"referencePrice"+i+"\"/>"+
 											"<input type=\"hidden\" name=\"standardId\" value=\""+d.id+"\" id=\"standardId"+i+"\"/>"+
-											"<input type=\"hidden\" name=\"itemId\" value=\""+d.item[i].item.id+"\" id=\"itemId"+i+"\"/>"+
+											"<input type=\"hidden\" name=\"itemId\" value=\""+d.standardItem[i].item.id+"\" id=\"itemId"+i+"\"/>"+
 											"<input type=\"hidden\" name=\"accountDate\" value=\""+str+"\" id=\"accountDate"+i+"\"/>"+
-											"<input type=\"hidden\" name=\"standardItemId\" value=\""+d.item[i].id+"\" id=\"standardItemId"+i+"\"/></td>" +
+											"<input type=\"hidden\" name=\"standardItemId\" value=\""+d.standardItem[i].id+"\" id=\"standardItemId"+i+"\"/></td>" +
 									  "</tr>";
 							$("#tbodyId").append($(tmp));  
 						} ;

@@ -1,7 +1,5 @@
 package com.kunlunrisk.model;
 
-
-
 import java.util.List;
 
 import javax.persistence.Column;
@@ -28,15 +26,7 @@ public class Standard {
 	@Column
 	private String property; // 项目性质
 	@OneToMany(targetEntity = StandardItem.class, mappedBy = "standardId", fetch = FetchType.LAZY)
-	private List<StandardItem> Item;
-
-	public List<StandardItem> getItem() {
-		return Item;
-	}
-
-	public void setItem(List<StandardItem> item) {
-		Item = item;
-	}
+	private List<StandardItem> standardItem;
 
 	public Integer getId() {
 		return id;
@@ -76,6 +66,14 @@ public class Standard {
 
 	public void setProperty(String property) {
 		this.property = property;
+	}
+
+	public List<StandardItem> getStandardItem() {
+		return standardItem;
+	}
+
+	public void setStandardItem(List<StandardItem> standardItem) {
+		this.standardItem = standardItem;
 	}
 
 }

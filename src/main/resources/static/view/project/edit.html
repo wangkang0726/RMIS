@@ -68,15 +68,15 @@ $(function(){
 		 $.get("/projectItems",function(data){
 			//console.log(data);
 			for(var i = 0; i<data.length; i++){
-				data[i].standard.item[i].price = data[i].standard.item[i].price ==null?"":data[i].standard.item[i].price;
+				data[i].standard.standardItem[i].price = data[i].standard.standardItem[i].price ==null?"":data[i].standard.standardItem[i].price;
 				data[i].realPrice = data[i].realPrice == null?"":data[i].realPrice;
 				data[i].amount = data[i].amount == null?"":data[i].amount;
 				var tmp = 
 				"<tr>"
-					+"<td>"+data[i].standard.item[i].item.name +"</td>"
+					+"<td>"+data[i].standard.standardItem[i].item.name +"</td>"
 					+"<td>"+data[i].standard.name+"</td>"
 					+"<td>"+data[i].amount+"</td>"
-					+"<td>"+data[i].standard.item[i].price+"</td>"
+					+"<td>"+data[i].standard.standardItem[i].price+"</td>"
 					+"<td>"+data[i].referencePrice+"</td>"
 					+"<td>"+data[i].realPrice+"</td>"
 				+"</tr>";

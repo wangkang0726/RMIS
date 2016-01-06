@@ -31,7 +31,7 @@ public class StandardController {
 
 	@RequestMapping(value = "/get/items/{id}", method = RequestMethod.GET)
 	public List<StandardItem> findItems(@PathVariable Integer id) {
-		return standardRepository.findOne(id).getItem();
+		return standardRepository.findOne(id).getStandardItem();
 	}
 
 	@RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
