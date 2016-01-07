@@ -21,7 +21,7 @@ $(function(){
 		 //提交
 			$.ajax({url:"/projects/add",
 				type:'POST',
-				data: JSON.stringify({name:$("#name").val(),accountDate:2015-10-12,userName:"小明",expectTotal:expectTotal,realTotal:realTotal}),
+				data: JSON.stringify({name:$("#name").val(),accountDate:2016-01-07,userName:"小明",expectTotal:expectTotal,realTotal:realTotal}),
 				contentType: "application/json",
 				dataType: 'json',
 				success:function(p){
@@ -42,21 +42,21 @@ $(function(){
 		  
 	});
 });
-<!--下拉菜单查询-->
-$(document).ready(function() {
-	$.ajax({
-		url : "/standards",
-		type : "get",
-		dataType:"json",
-		success : function(data) {
-			var d= eval(data);
-			$.each(d,function(i,n) {
-                $("#standard").append('<option value="' + n.id + '">' + n.name  +'</option>');
-            });
-		}
-	});
-	
-	
+		<!--下拉菜单查询-->
+		$(document).ready(function() {
+			$.ajax({
+				url : "/standards",
+				type : "get",
+				dataType:"json",
+				success : function(data) {
+					var d= eval(data);
+					$.each(d,function(i,n) {
+		                $("#standard").append('<option value="' + n.id + '">' + n.name  +'</option>');
+		            });
+				}
+			});
+		
+	<!--选择标准后 -->
 	$('#standard').change(function (){
 		  expectTotal = 0;
 		   realTotal = 0;
