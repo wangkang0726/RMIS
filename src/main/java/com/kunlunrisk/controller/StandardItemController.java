@@ -49,7 +49,6 @@ public class StandardItemController {
 	public String updateStandardItem(@PathVariable Integer standardId,Integer id, Double price){
 		StandardItem standardItem = standardItemRepository.findOne(id);
 		standardItem.setPrice(price);
-		//System.out.println("aaaaaaaaa");
 		standardItemRepository.saveAndFlush(standardItem);
 		return "success";
 	}

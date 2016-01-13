@@ -24,8 +24,8 @@
 		<tr>
 			<th>公估项目名称</th>
 			<th>核算日期</th>
-			<th>核算损失金额（元）</th>
-			<th>实际损失金额（元）</th>
+			<th>报损总额（元）</th>
+			<th>实际损失总额（元）</th>
 			<th>核算人员</th>
 		</tr>
 	</thead>
@@ -34,7 +34,7 @@
 
 <script type="text/javascript">
 	function openPage(url, id) {
-		var scope = angular.element($("#mainCtrl")).scope()
+		var scope = angular.element($("#mainCtrl")).scope();
 		$.get("/projects/get/" + id, function(data) {
 			scope.goDetail(url, data);
 			scope.$apply();

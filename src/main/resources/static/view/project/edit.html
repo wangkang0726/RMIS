@@ -3,14 +3,46 @@
 
 $(function(){
 	$('#update').click(function(){
+		
+		<!--获取实际总额-->
+		$("input[id*='realPrice']").each(function(i,n){
+			
+			var realPrice = $("#realPrice"+i).val();
+			if(realPrice==null||realPrice==""){
+				realPrice=0;
+			} ;
+			realTotal += realPrice*1;
+		});	
+		
+		
 		$.ajax({
 			url:"/projects/"+$("#projectId").val(),
 			type:'PUT',
-			data:JSON.stringify({name:$("#name").val(),accountdate:$("#accountDate").val(),expectTotal:$("#expectTotal").val(),realTotal:$("#realTotal").val(),userName:$("#userName").val(),}),
+			data:JSON.stringify({name:$("#name").val(),accountDate:$("#accountDate").val(),expectTotal:$("#expectTotal").val(),realTotal:$("#realTotal").val(),userName:$("#userName").val()}),
 			contentType: "application/json",
 			dataType: 'json',
-			success:function(data){
-				
+			success:function(p){
+				var p = eval(p);
+			    $("input[id*='amount']").each(function (i,n){
+			    	
+						$.post("/projectItems/update/"+p.id,
+							   {projectId:$('#projectId'+i).val(),
+								amount:$('#amount'+i).val(),
+								realPrice:$('#realPrice'+i).val(),
+								standardId:$('#standardId'+i).val(),
+								place:$('#place'+i).val(),
+								length:$('#length'+i).val(),
+								width:$('#width'+i).val(),
+								height:$('#height'+i).val(),
+								price:$('#price'+i).val(), 
+								remark:$('#remark'+i).val(),
+								reportedLoss:$('#reportedLoss'+i).val(),
+								standardId:$('#standardId'+i).val(),
+								itemId:$('#itemId'+i).val(),
+								standardItemId:$('#standardItemId'+i).val(),
+							//	projectId:$('#projectId'+i).val()
+								});
+				});  
 				alert("更新成功");
 			},
 			error:function(xhr, type){
@@ -43,45 +75,117 @@ $(function(){
 	<table class="table table-bordered table-sm" id="d">
 			<thead class="thead-inverse">
 			 <tr>
-		        <th>损失项</th>
+		        <th>序号</th>
+				<th>地点（桩号）</th>
+				<th>损失项</th>
 		        <th>使用标准</th>
+		        <th>长</th>
+		        <th>宽</th>
+		        <th>高</th>
 		        <th>损失数量</th>
 		        <th>标准单价</th>
-		        <th>参考金额</th>
+		        <th>报损金额</th>
 		        <th>实际损失金额</th>
+		        <th>备注</th>
 		    </tr>
 			</thead>
-<!-- 			
+			<!-- 			
 			<tr ng-repeat="p in pagePara.projectItem">
-				<td>{{p.item.name}}</td>
+				<td>{{p.standardItem.name}}</td>
 				<td>{{p.standard.name}}</td>
 				<td><input id="amount{{$index}}" name="amount" value="{{p.amount}}"/></td>
 				<td>{{p.standard.price}}</td>	
 				<td>{{p.amount*p.price}}</td>
 				<td><input id="realPrice" name="realPrice" value="{{p.realPrice}}"/></td>
 			</tr>	
-
 	 		 -->
 	</table>
 <script>
 	 $(function(){
-		 $.get("/projectItems",function(data){
+		var scope = angular.element($("#mainCtrl")).scope();
+		var x= scope.pagePara.id;
+		//console.log(x);
+		 $.get("/projectItems/find/"+x,function(data){
 			//console.log(data);
+			var data = eval(data);
+			//console.log(data.amount);
 			for(var i = 0; i<data.length; i++){
-				data[i].standard.standardItem[i].price = data[i].standard.standardItem[i].price ==null?"":data[i].standard.standardItem[i].price;
-				data[i].realPrice = data[i].realPrice == null?"":data[i].realPrice;
-				data[i].amount = data[i].amount == null?"":data[i].amount;
-				var tmp = 
-				"<tr>"
-					+"<td>"+data[i].standard.standardItem[i].item.name +"</td>"
+					//console.log(data[i].standard.name);
+					data[i].standard.standardItem[i].price = data[i].standard.standardItem[i].price ==null?"":data[i].standard.standardItem[i].price;
+					data[i].reportedLoss = data[i].reportedLoss == null?"":data[i].reportedLoss;
+					data[i].amount = data[i].amount == null?"":data[i].amount;
+					data[i].standardItem.price = data[i].standardItem.price == null?"":data[i].standardItem.price;  
+					data[i].realPrice = data[i].realPrice == null?"":data[i].realPrice;  
+					data[i].length = data[i].length == null?"":data[i].length; 
+					data[i].width = data[i].width == null?"":data[i].width; 
+					data[i].height = data[i].height == null?"":data[i].height; 
+					data[i].price = data[i].price == null?"":data[i].price; 
+					data[i].place = data[i].place == null?"":data[i].place;
+					data[i].remark = data[i].remark == null?"":data[i].remark;
+					var tmp = 
+					"<tr>"
+					+"<td>"+data[i].item.id+"</td>"
+					+"<td><input type=\"text\" name=\"place\" value=\" " +data[i].place+ " \" id=\"place"+i+"\" style=\"width:100px\"/></td>" 
+					+"<td>"+data[i].item.name +"</td>"
 					+"<td>"+data[i].standard.name+"</td>"
-					+"<td>"+data[i].amount+"</td>"
-					+"<td>"+data[i].standard.standardItem[i].price+"</td>"
-					+"<td>"+data[i].referencePrice+"</td>"
-					+"<td>"+data[i].realPrice+"</td>"
-				+"</tr>";
-				$("#d").append(tmp);
+					+"<td><input type=\"text\" name=\"length\" value=\" " +data[i].length+ " \" id=\"length"+i+"\" style=\"width:80px\"/></td>" 
+					+"<td><input type=\"text\" name=\"width\" value=\" " +data[i].width+ " \" id=\"width"+i+"\" style=\"width:80px\"/></td>" 
+					+"<td><input type=\"text\" name=\"height\" value=\" " +data[i].height+ " \" id=\"height"+i+"\" style=\"width:80px\"/></td>" 
+					+"<td><input type=\"text\" name=\"amount\" value=\" " +data[i].amount+ " \" id=\"amount"+i+"\" style=\"width:80px\"/></td>"    //data[i].amount
+					+"<td><input type=\"text\" name=\"price\" value=\" " +data[i].price+ " \" id=\"price"+i+"\" style=\"width:100px\"/></td>"
+					+"<td></td>"
+					//+"<td><input type=\"text\" name=\"reportedLoss\" value=\" " +data[i].reportedLoss+ " \" id=\"reportedLoss"+i+"\" style=\"width:100px\"/></td>"
+					+"<td><input type=\"text\" name=\"realPrice\" value=\"  " +data[i].realPrice+ " \" id=\"realPrice"+i+"\" style=\"width:100px\"/>"     //data[i].realPrice
+					+"<td><input type=\"text\" name=\"remark\" value=\" "+data[i].remark+ "\" id=\"remark"+i+"\" style=\"width:100px\"/>"+
+						"<input type=\"hidden\" name=\"standardId\" value=\""+data[i].standard.id+"\" id=\"standardId"+i+"\"/>"+
+						"<input type=\"hidden\" name=\"itemId\" value=\""+data[i].item.id+"\" id=\"itemId"+i+"\"/>"+
+						"<input type=\"hidden\" name=\"standardItemId\" value=\""+data[i].standardItem.id+"\" id=\"standardItemId"+i+"\"/>" +
+						"<input type=\"hidden\" name=\"projectId\" value=\""+data[i].projectId+"\" id=\"projectId"+i+"\"/></td>" 
+					+"</tr>";
+					$("#d").append(tmp);
 			}
+			
+			<!--长*宽*高 获得数量-->
+			$("input[id*='height']").each(function(i,n){
+				 $(n).bind("blur",function(){
+						var c = $("#amount"+i).val();
+						if(c==null||c==""){
+							c = 0;
+						}
+						
+						<!--损失数量 -->
+						$(n).parent().next().val(($(n).val()*1)*($('#length'+i).val()*1)*($('#width'+i).val()*1));
+						
+						var x = ($(n).val()*1)*($('#length'+i).val()*1)*($('#width'+i).val()*1);   
+						$("#amount"+i).val(x);   
+						
+						
+				}); 
+			});
+			<!---->
+			$("input[id*='amount']").each(function(i,n){
+				 $(n).bind("blur",function(){
+						var unmulti = $("#reportedLoss"+i).val();
+						if(unmulti==null||unmulti==""){
+							unmulti = 0;
+						}
+						
+						<!--报损金额 -->
+						$(n).parent().next().next().html(($(n).val()*1)*($('#price'+i).val()*1));
+						
+						var multi = ($(n).val()*1)*($('#price'+i).val()*1);   
+						//alert(multi);
+						$("#reportedLoss"+i).val(multi);   
+						<!--报损总额 -->
+						if(multi!=null&&multi!=""){
+							expectTotal += multi*1;    
+							expectTotal -= unmulti;
+							//console.log(expectTotal)
+						};
+						
+				}); 
+			});
+			
 		}); 
 	}); 
 </script>

@@ -17,14 +17,24 @@ public class ProjectItem {
 	private Integer id;
 	@Column
 	private Integer projectId;
-
 	@Column
 	private Double amount; // 损失数量
-
-	@Column
-	private Double referencePrice; // 参考金额
+	// @Column
+	// private Double reportedLoss; // 报损金额
 	@Column
 	private Double realPrice; // 实际损失金额
+	@Column
+	private String place; // 地点（桩号）
+	@Column
+	private Double length; // 长
+	@Column
+	private Double width; // 宽
+	@Column
+	private Double height; // 高
+	@Column
+	private Double price; // 标准单价
+	@Column
+	private String remark; // 备注
 
 	@ManyToOne
 	private Standard standard;
@@ -73,12 +83,52 @@ public class ProjectItem {
 		this.standard = standard;
 	}
 
-	public Double getReferencePrice() {
-		return referencePrice;
+	public String getPlace() {
+		return place;
 	}
 
-	public void setReferencePrice(Double referencePrice) {
-		this.referencePrice = referencePrice;
+	public void setPlace(String place) {
+		this.place = place;
+	}
+
+	public Double getLength() {
+		return length;
+	}
+
+	public void setLength(Double length) {
+		this.length = length;
+	}
+
+	public Double getWidth() {
+		return width;
+	}
+
+	public void setWidth(Double width) {
+		this.width = width;
+	}
+
+	public Double getHeight() {
+		return height;
+	}
+
+	public void setHeight(Double height) {
+		this.height = height;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 	public Item getItem() {

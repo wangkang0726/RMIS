@@ -27,9 +27,19 @@ $(function(){
 				success:function(p){
 				 var p = eval(p);
 				    $("input[id*='amount']").each(function (i,n){
-						$.post("/projectItems/add/"+p.id,{amount:$('#amount'+i).val(),realPrice:$('#realPrice'+i).val(),
-							referencePrice:$('#referencePrice'+i).val(),standardId:$('#standardId'+i).val(),
-							itemId:$('#itemId'+i).val(),standardItemId:$('#standardItemId'+i).val()});
+						$.post("/projectItems/add/"+p.id,
+								{place:$('#place'+i).val(),
+								length:$('#length'+i).val(),
+								width:$('#width'+i).val(),
+								height:$('#height'+i).val(),
+								amount:$('#amount'+i).val(),
+								price:$('#price'+i).val(),
+								realPrice:$('#realPrice'+i).val(),
+							//	reportedLoss:$('#reportedLoss'+i).val(),
+								standardId:$('#standardId'+i).val(),
+								itemId:$('#itemId'+i).val(),
+								standardItemId:$('#standardItemId'+i).val(),
+								remark:$('#remark'+i).val()});
 					});  
 				   
 					 alert("ok！！");
@@ -70,33 +80,59 @@ $(function(){
 						
 							 d.standardItem[i].price = d.standardItem[i].price==null ? "" : d.standardItem[i].price;
 							 var tmp = "<tr>" +
+											"<td>"+d.standardItem[i].item.id+"</td>"+
+											"<td><input type=\"text\" name=\"place\" value=\"\" id=\"place"+i+"\" style=\"width:100px\"/>"+
 											"<td>"+d.standardItem[i].item.name+"</td>"+
 											"<td>"+d.name+"</td>"+ 
-											"<td><input type=\"text\" name=\"amount\" value=\"\" id=\"amount"+i+"\" /></td>" +
-											"<td>"+d.standardItem[i].price+"</td>" +
+											"<td><input type=\"text\" name=\"length\" value=\"\" id=\"length"+i+"\"  style=\"width:80px\"/>"+
+											"<td><input type=\"text\" name=\"width\" value=\"\" id=\"width"+i+"\" style=\"width:80px\" />"+
+											"<td><input type=\"text\" name=\"height\" value=\"\" id=\"height"+i+"\" style=\"width:80px\"/>"+
+											"<td><input type=\"text\" name=\"amount\" value=\"\" id=\"amount"+i+"\" style=\"width:80px\"/></td>" +
+											"<td><input type=\"text\" name=\"price\" value=\" "+d.standardItem[i].price+"\" id=\"price"+i+"\" style=\"width:100px\"/></td>" +
 											"<td></td>" +
-											"<td><input type=\"text\" name=\"realPrice\" value=\"\" id=\"realPrice"+i+"\" />"+
-											"<input type=\"hidden\" name=\"referencePrice\" value=\"\" id=\"referencePrice"+i+"\"/>"+
-											"<input type=\"hidden\" name=\"standardId\" value=\""+d.id+"\" id=\"standardId"+i+"\"/>"+
-											"<input type=\"hidden\" name=\"itemId\" value=\""+d.standardItem[i].item.id+"\" id=\"itemId"+i+"\"/>"+
-											"<input type=\"hidden\" name=\"accountDate\" value=\""+str+"\" id=\"accountDate"+i+"\"/>"+
-											"<input type=\"hidden\" name=\"standardItemId\" value=\""+d.standardItem[i].id+"\" id=\"standardItemId"+i+"\"/></td>" +
+											"<td><input type=\"text\" name=\"realPrice\" value=\"\" id=\"realPrice"+i+"\" style=\"width:100px\"/>"+
+												//"<input type=\"hidden\" name=\"reportedLoss\" value=\"\" id=\"reportedLoss"+i+"\"/>"+
+												"<input type=\"hidden\" name=\"standardId\" value=\""+d.id+"\" id=\"standardId"+i+"\"/>"+
+												"<input type=\"hidden\" name=\"itemId\" value=\""+d.standardItem[i].item.id+"\" id=\"itemId"+i+"\"/>"+
+												"<input type=\"hidden\" name=\"accountDate\" value=\""+str+"\" id=\"accountDate"+i+"\"/>"+
+												"<input type=\"hidden\" name=\"standardItemId\" value=\""+d.standardItem[i].id+"\" id=\"standardItemId"+i+"\"/></td>" +
+											"<td><input type=\"text\" name=\"remark\" value=\"\" id=\"remark"+i+"\" />"+
 									  "</tr>";
 							$("#tbodyId").append($(tmp));  
 						} ;
 					
+						<!--长*宽*高 获得数量-->
+						$("input[id*='height']").each(function(i,n){
+							 $(n).bind("blur",function(){
+									var c = $("#amount"+i).val();
+									if(c==null||c==""){
+										c = 0;
+									}
+									
+									<!--损失数量 -->
+									$(n).parent().next().val(($(n).val()*1)*($('#length'+i).val()*1)*($('#width'+i).val()*1));
+									
+									var x = ($(n).val()*1)*($('#length'+i).val()*1)*($('#width'+i).val()*1);   
+									$("#amount"+i).val(x);   
+									
+									
+							}); 
+						});
+						<!---->
 						$("input[id*='amount']").each(function(i,n){
 							 $(n).bind("blur",function(){
-									var unmulti = $("#referencePrice"+i).val();
+									var unmulti = $("#reportedLoss"+i).val();
 									if(unmulti==null||unmulti==""){
 										unmulti = 0;
 									}
 									
-									<!--参考金额 -->
-									$(n).parent().next().next().html(($(n).val()*1)*($(n).parent().next().text()*1));
-									var multi = ($(n).val()*1)*($(n).parent().next().text()*1);   
-									$("#referencePrice"+i).val(multi);   
-									<!--参考总额 -->
+									<!--报损金额 -->
+									$(n).parent().next().next().html(($(n).val()*1)*($('#price'+i).val()*1));
+									
+									var multi = ($(n).val()*1)*($('#price'+i).val()*1);   
+									//alert(multi);
+									$("#reportedLoss"+i).val(multi);   
+									<!--报损总额 -->
 									if(multi!=null&&multi!=""){
 										expectTotal += multi*1;    
 										expectTotal -= unmulti;
@@ -105,6 +141,8 @@ $(function(){
 									
 							}); 
 						});
+						
+					
 						
 		});
 		
@@ -115,7 +153,7 @@ $(function(){
 </script>
 
 <span id="msg"></span>
-<table class="table table-bordered table-sm">
+<table class="table table-bordered ">
   	<tr>
         <td>项目名称：</td>
         <td><input type="text" name="name" id="name"/></td>
@@ -146,15 +184,21 @@ $(function(){
 	     </td>
     </tr>
 </table>
-	<table class="table table-bordered table-sm" id="d">
+	<table class="table table-condensed table-sm" id="d">
 			<thead class="thead-inverse">
 				<tr>
+					<th>序号</th>
+					<th>地点（桩号）</th>
 					<th>损失项</th>
 			        <th>使用标准</th>
+			        <th>长</th>
+			        <th>宽</th>
+			        <th>高</th>
 			        <th>损失数量</th>
 			        <th>标准单价</th>
-			        <th>参考金额</th>
+			        <th>报损金额</th>
 			        <th>实际损失金额</th>
+			        <th>备注</th>
 				</tr>
 			</thead>
 			<input type="hidden" name="expectTotal" id="expectTotal"  value=""/>
@@ -175,7 +219,7 @@ $(function(){
 	
 	<div align="center">		
 		<button type="submit" class="btn btn-primary" type="button" id="save">保存</button>
-		<button type="button" class="btn btn-success" name="backid" id="backid" ng-click="backMain();">返回列表</button>
+		<button type="button" class="btn btn-success" name="backid" id="backid" ng-click="backMain();">返回</button>
 	</div>
 </table>
 <script>

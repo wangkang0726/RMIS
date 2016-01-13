@@ -12,7 +12,7 @@ $(function(){
 			success:function(data){
 				var d = eval(data);
 			    $('input[name=price]').each(function (i,n){
-					$.post("/standardItems/update/"+d.id,{id:$('#id'+i).val(),price:$('#price'+i).val()},function(val){console.log(i+"   "+val);});
+					$.post("/standardItems/update/"+d.id,{id:$('#id'+i).val(),price:$('#price'+i).val()});
 				});  
 				alert("更新成功");
 			},
@@ -28,7 +28,7 @@ $(function(){
 
 </script>
 
-	<table class="table table-bordered table-sm" id="x">
+	<table class="table table-condensed table-sm" id="x">
 		<thead class="thead-inverse">
 			<tr>
 				<th>名称</th>
