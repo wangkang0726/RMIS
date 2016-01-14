@@ -88,10 +88,10 @@ public class ProjectItemController {
 	}
 
 	@RequestMapping(value = "/update/{projectId}", method = RequestMethod.POST)
-	public String updateProjectItem(@PathVariable Integer id, String place, Double length, Double width, Double height, 
+	public String updateProjectItem(@PathVariable Integer projectId, String place, Double length, Double width, Double height, 
 			Double amount, Double price,  Double realPrice, String remark,    
-			Integer standardId, Integer itemId, Integer standardItemId, Integer projectId) {
-		ProjectItem projectItem = projectItemRepository.findOne(id);
+			Integer standardId, Integer itemId, Integer standardItemId) {
+		ProjectItem projectItem = projectItemRepository.findOne(projectId);
 		//System.out.println("aaaaaaaaa");
 		projectItem.setPlace(place);
 		projectItem.setAmount(amount);
@@ -107,7 +107,7 @@ public class ProjectItemController {
 		projectItem.setStandard(standardRepository.getOne(standardId));
 		projectItem.setItem(itemRepository.getOne(itemId));
 		projectItem.setStandardItem(standardItemRepository.getOne(standardItemId));
-		projectItem.setProjectId(projectId);
+		//projectItem.setProjectId(projectId);
 		projectItemRepository.saveAndFlush(projectItem);
 		return "success";
 	}
