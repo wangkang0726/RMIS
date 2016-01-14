@@ -67,7 +67,7 @@ public class ProjectItemController {
 	
 	@RequestMapping(value = "/add/{projectId}", method = RequestMethod.POST)
 	public String addProjectItem(@PathVariable Integer projectId, Integer itemId, Double realPrice, Double amount,  Integer standardId, 
-			Integer standardItemId, Double length, Double width, Double height, String place, Double price, String remark ) {
+			Integer standardItemId, Double length, Double width, Double height, String place, Double reportedLoss ,Double price, String remark ) {
 		ProjectItem projectItem = new ProjectItem();
 		projectItem.setId(null);
 		projectItem.setProjectId(projectId);
@@ -79,7 +79,7 @@ public class ProjectItemController {
 		projectItem.setPlace(place);
 		projectItem.setPrice(price);
 		projectItem.setRemark(remark);
-		//projectItem.setReportedLoss(reportedLoss);
+		projectItem.setReportedLoss(reportedLoss);
 		projectItem.setStandard(standardRepository.getOne(standardId));
 		projectItem.setItem(itemRepository.getOne(itemId));
 		projectItem.setStandardItem(standardItemRepository.getOne(standardItemId));
@@ -88,22 +88,18 @@ public class ProjectItemController {
 	}
 
 	@RequestMapping(value = "/update/{projectId}", method = RequestMethod.POST)
-	public String updateProjectItem(@PathVariable Integer projectId, String place, Double length, Double width, Double height, 
-			Double amount, Double price,  Double realPrice, String remark,    
-			Integer standardId, Integer itemId, Integer standardItemId) {
+	public String updateProjectItem(@PathVariable Integer projectId, String place, Double length, Double width, Double height,Double amount, 
+			Double price,  Double realPrice, String remark, Double reportedLoss,   Integer standardId, Integer itemId, Integer standardItemId) {
 		ProjectItem projectItem = projectItemRepository.findOne(projectId);
-		//System.out.println("aaaaaaaaa");
 		projectItem.setPlace(place);
 		projectItem.setAmount(amount);
 		projectItem.setRealPrice(realPrice);
-		
 		projectItem.setLength(length);
 		projectItem.setWidth(width);
 		projectItem.setHeight(height);
-		
 		projectItem.setPrice(price);
 		projectItem.setRemark(remark);
-		//projectItem.setReportedLoss(reportedLoss);
+		projectItem.setReportedLoss(reportedLoss);
 		projectItem.setStandard(standardRepository.getOne(standardId));
 		projectItem.setItem(itemRepository.getOne(itemId));
 		projectItem.setStandardItem(standardItemRepository.getOne(standardItemId));

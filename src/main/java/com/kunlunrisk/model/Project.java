@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity(name = "R_PROJECT")
 public class Project {
@@ -20,7 +21,7 @@ public class Project {
 	private Integer id;
 	@Column
 	private String name; // 公估项目名称
-	@Column
+	@DateTimeFormat
 	private Date accountDate; // 核算日期
 	@Column
 	private String userName; // 核算人员

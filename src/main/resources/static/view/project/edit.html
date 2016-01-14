@@ -29,7 +29,6 @@ $(function(){
 							   {projectId:$('#projectId'+i).val(),
 								amount:$('#amount'+i).val(),
 								realPrice:$('#realPrice'+i).val(),
-								standardId:$('#standardId'+i).val(),
 								place:$('#place'+i).val(),
 								length:$('#length'+i).val(),
 								width:$('#width'+i).val(),
@@ -40,7 +39,6 @@ $(function(){
 								standardId:$('#standardId'+i).val(),
 								itemId:$('#itemId'+i).val(),
 								standardItemId:$('#standardItemId'+i).val(),
-							//	projectId:$('#projectId'+i).val()
 								});
 				});  
 				alert("更新成功");
@@ -133,8 +131,8 @@ $(function(){
 					+"<td><input type=\"text\" name=\"height\" value=\" " +data[i].height+ " \" id=\"height"+i+"\" style=\"width:80px\"/></td>" 
 					+"<td><input type=\"text\" name=\"amount\" value=\" " +data[i].amount+ " \" id=\"amount"+i+"\" style=\"width:80px\"/></td>"    //data[i].amount
 					+"<td><input type=\"text\" name=\"price\" value=\" " +data[i].price+ " \" id=\"price"+i+"\" style=\"width:100px\"/></td>"
-					+"<td></td>"
-					//+"<td><input type=\"text\" name=\"reportedLoss\" value=\" " +data[i].reportedLoss+ " \" id=\"reportedLoss"+i+"\" style=\"width:100px\"/></td>"
+					//+"<td></td>"
+					+"<td><input type=\"text\" name=\"reportedLoss\" value=\" " +data[i].reportedLoss+ " \" id=\"reportedLoss"+i+"\" style=\"width:100px\"/></td>"
 					+"<td><input type=\"text\" name=\"realPrice\" value=\"  " +data[i].realPrice+ " \" id=\"realPrice"+i+"\" style=\"width:100px\"/>"     //data[i].realPrice
 					+"<td><input type=\"text\" name=\"remark\" value=\" "+data[i].remark+ "\" id=\"remark"+i+"\" style=\"width:100px\"/>"+
 						"<input type=\"hidden\" name=\"standardId\" value=\""+data[i].standard.id+"\" id=\"standardId"+i+"\"/>"+

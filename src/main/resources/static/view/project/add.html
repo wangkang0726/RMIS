@@ -21,7 +21,7 @@ $(function(){
 		 //提交
 			$.ajax({url:"/projects/add",
 				type:'POST',
-				data: JSON.stringify({name:$("#name").val(),accountDate:2016-01-07,userName:"小明",expectTotal:expectTotal,realTotal:realTotal}),
+				data: JSON.stringify({name:$("#name").val(),accountDate:$("#accountDate").val(),userName:"小明",expectTotal:expectTotal,realTotal:realTotal}),
 				contentType: "application/json",
 				dataType: 'json',
 				success:function(p){
@@ -35,7 +35,7 @@ $(function(){
 								amount:$('#amount'+i).val(),
 								price:$('#price'+i).val(),
 								realPrice:$('#realPrice'+i).val(),
-							//	reportedLoss:$('#reportedLoss'+i).val(),
+								reportedLoss:$('#reportedLoss'+i).val(),
 								standardId:$('#standardId'+i).val(),
 								itemId:$('#itemId'+i).val(),
 								standardItemId:$('#standardItemId'+i).val(),
@@ -74,7 +74,8 @@ $(function(){
 		$.get("standards/get/"+$(this).val(),function(d){
 			var x = new Date();
 			var str = x.getFullYear()+"-"+(x.getMonth()+1)+"-"+x.getDate();
-			//alert(str);
+			alert(str);
+			
 		
 					for(var i = 0; i <d.standardItem.length ; i++){
 						
@@ -91,10 +92,10 @@ $(function(){
 											"<td><input type=\"text\" name=\"price\" value=\" "+d.standardItem[i].price+"\" id=\"price"+i+"\" style=\"width:100px\"/></td>" +
 											"<td></td>" +
 											"<td><input type=\"text\" name=\"realPrice\" value=\"\" id=\"realPrice"+i+"\" style=\"width:100px\"/>"+
-												//"<input type=\"hidden\" name=\"reportedLoss\" value=\"\" id=\"reportedLoss"+i+"\"/>"+
+												"<input type=\"hidden\" name=\"reportedLoss\" value=\"\" id=\"reportedLoss"+i+"\"/>"+
 												"<input type=\"hidden\" name=\"standardId\" value=\""+d.id+"\" id=\"standardId"+i+"\"/>"+
 												"<input type=\"hidden\" name=\"itemId\" value=\""+d.standardItem[i].item.id+"\" id=\"itemId"+i+"\"/>"+
-												"<input type=\"hidden\" name=\"accountDate\" value=\""+str+"\" id=\"accountDate"+i+"\"/>"+
+												//"<input type=\"hidden\" name=\"accountDate\" value=\""+str+"\" id=\"accountDate"+i+"\"/>"+
 												"<input type=\"hidden\" name=\"standardItemId\" value=\""+d.standardItem[i].id+"\" id=\"standardItemId"+i+"\"/></td>" +
 											"<td><input type=\"text\" name=\"remark\" value=\"\" id=\"remark"+i+"\" />"+
 									  "</tr>";
@@ -156,7 +157,9 @@ $(function(){
 <table class="table table-bordered ">
   	<tr>
         <td>项目名称：</td>
-        <td><input type="text" name="name" id="name"/></td>
+        <td><input type="text" name="name" id="name"/>
+        	<input type="hidden" name="accountDate" value="" id="accountDate"/>
+        </td>
         <!-- <td>年份：</td>
         <td><input type="text" name="year" id="year"/></td> -->
         <!-- <td>地区：</td>

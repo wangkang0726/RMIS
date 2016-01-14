@@ -19,8 +19,8 @@ public class ProjectItem {
 	private Integer projectId;
 	@Column
 	private Double amount; // 损失数量
-	// @Column
-	// private Double reportedLoss; // 报损金额
+	@Column
+	private Double reportedLoss; // 报损金额
 	@Column
 	private Double realPrice; // 实际损失金额
 	@Column
@@ -145,6 +145,14 @@ public class ProjectItem {
 
 	public void setStandardItem(StandardItem standardItem) {
 		this.standardItem = standardItem;
+	}
+
+	public Double getReportedLoss() {
+		return reportedLoss;
+	}
+
+	public void setReportedLoss(Double reportedLoss) {
+		this.reportedLoss = reportedLoss;
 	}
 
 }
