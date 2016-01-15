@@ -21,8 +21,8 @@ public class Project {
 	private Integer id;
 	@Column
 	private String name; // 公估项目名称
-	@DateTimeFormat
-	private Date accountDate; // 核算日期
+	@Column
+	private String accountDate; // 核算日期
 	@Column
 	private String userName; // 核算人员
 	@Column
@@ -49,24 +49,21 @@ public class Project {
 		this.name = name;
 	}
 
-
 	public String getUserName() {
 		return userName;
 	}
 
 	public void setUserName(String userName) {
 		this.userName = userName;
-	}
+	} 
 
-
-	public Date getAccountDate() {
+	public String getAccountDate() {
 		return accountDate;
 	}
 
-	public void setAccountDate(Date accountDate) {
+	public void setAccountDate(String accountDate) {
 		this.accountDate = accountDate;
 	}
-
 
 	public List<ProjectItem> getProjectItem() {
 		return projectItem;
@@ -91,7 +88,5 @@ public class Project {
 	public void setRealTotal(Double realTotal) {
 		this.realTotal = realTotal;
 	}
-
-
 
 }

@@ -16,12 +16,24 @@ $(function(){
 				} ;
 				realTotal += realPrice*1;
 			});	
+		//提交时间获取
+			var x = new Date();
+			var m = x.getMonth()+1
+			if(m<10){
+				m = "0"+m
+			};
+			var t = x.getDate();
+			if(t<10){
+				t = "0"+t
+			};
 			
-			
+			var str = x.getFullYear()+"-"+m+"-"+t;
+			//alert(str);
+
 		 //提交
 			$.ajax({url:"/projects/add",
 				type:'POST',
-				data: JSON.stringify({name:$("#name").val(),accountDate:$("#accountDate").val(),userName:"小明",expectTotal:expectTotal,realTotal:realTotal}),
+				data: JSON.stringify({name:$("#name").val(),accountDate:str,userName:"小明",expectTotal:expectTotal,realTotal:realTotal}),
 				contentType: "application/json",
 				dataType: 'json',
 				success:function(p){
@@ -72,11 +84,7 @@ $(function(){
 		   realTotal = 0;
 		$("#tbodyId").html("");
 		$.get("standards/get/"+$(this).val(),function(d){
-			var x = new Date();
-			var str = x.getFullYear()+"-"+(x.getMonth()+1)+"-"+x.getDate();
-			alert(str);
 			
-		
 					for(var i = 0; i <d.standardItem.length ; i++){
 						
 							 d.standardItem[i].price = d.standardItem[i].price==null ? "" : d.standardItem[i].price;
@@ -95,7 +103,7 @@ $(function(){
 												"<input type=\"hidden\" name=\"reportedLoss\" value=\"\" id=\"reportedLoss"+i+"\"/>"+
 												"<input type=\"hidden\" name=\"standardId\" value=\""+d.id+"\" id=\"standardId"+i+"\"/>"+
 												"<input type=\"hidden\" name=\"itemId\" value=\""+d.standardItem[i].item.id+"\" id=\"itemId"+i+"\"/>"+
-												//"<input type=\"hidden\" name=\"accountDate\" value=\""+str+"\" id=\"accountDate"+i+"\"/>"+
+											//	"<input type=\"hidden\" name=\"accountDate\" value=\""+str+"\" id=\"accountDate"+i+"\"/>"+
 												"<input type=\"hidden\" name=\"standardItemId\" value=\""+d.standardItem[i].id+"\" id=\"standardItemId"+i+"\"/></td>" +
 											"<td><input type=\"text\" name=\"remark\" value=\"\" id=\"remark"+i+"\" />"+
 									  "</tr>";
@@ -143,8 +151,6 @@ $(function(){
 							}); 
 						});
 						
-					
-						
 		});
 		
 	});
@@ -157,8 +163,8 @@ $(function(){
 <table class="table table-bordered ">
   	<tr>
         <td>项目名称：</td>
-        <td><input type="text" name="name" id="name"/>
-        	<input type="hidden" name="accountDate" value="" id="accountDate"/>
+        <td><input type="text" name="name" id="name" value=""/>
+        	<input type="hidden" name="accountDate"  id="accountDate"  />
         </td>
         <!-- <td>年份：</td>
         <td><input type="text" name="year" id="year"/></td> -->
