@@ -6,6 +6,11 @@ var realTotal = 0;
 $(function(){
 	$('#save').click(function (){
 		
+		if (name.length == 0) {
+			alert("名称不能为空.");
+			
+			return false;
+		}
 		  
 			<!--获取实际总额-->
 			$("input[id*='realPrice']").each(function(i,n){
@@ -97,7 +102,7 @@ $(function(){
 											"<td><input type=\"text\" name=\"width\" value=\"\" id=\"width"+i+"\" style=\"width:80px\" />"+
 											"<td><input type=\"text\" name=\"height\" value=\"\" id=\"height"+i+"\" style=\"width:80px\"/>"+
 											"<td><input type=\"text\" name=\"amount\" value=\"\" id=\"amount"+i+"\" style=\"width:80px\"/></td>" +
-											"<td><input type=\"text\" name=\"price\" value=\" "+d.standardItem[i].price+"\" id=\"price"+i+"\" style=\"width:100px\"/></td>" +
+											"<td><input type=\"text\" name=\"price\" value=\" "+d.standardItem[i].price+"\" id=\"price"+i+"\"  style=\"width:100px\"/></td>" +
 											"<td></td>" +
 											"<td><input type=\"text\" name=\"realPrice\" value=\"\" id=\"realPrice"+i+"\" style=\"width:100px\"/>"+
 												"<input type=\"hidden\" name=\"reportedLoss\" value=\"\" id=\"reportedLoss"+i+"\"/>"+
@@ -158,12 +163,11 @@ $(function(){
 });
 
 </script>
-
 <span id="msg"></span>
 <table class="table table-bordered ">
   	<tr>
         <td>项目名称：</td>
-        <td><input type="text" name="name" id="name" value=""/>
+        <td><input type="text" name="name" id="name" value="" ng-model="name" required/>
         	<input type="hidden" name="accountDate"  id="accountDate"  />
         </td>
         <!-- <td>年份：</td>
@@ -198,7 +202,7 @@ $(function(){
 				<tr>
 					<th>序号</th>
 					<th>地点（桩号）</th>
-					<th>损失项</th>
+					<th>损失项</th> 
 			        <th>使用标准</th>
 			        <th>长</th>
 			        <th>宽</th>
@@ -210,8 +214,8 @@ $(function(){
 			        <th>备注</th>
 				</tr>
 			</thead>
-			<input type="hidden" name="expectTotal" id="expectTotal"  value=""/>
-			<input type="hidden" name="realTotal" id="realTotal"  value=""/>
+			<input type="hidden" name="expectTotal" id="expectTotal"  value="" />
+			<input type="hidden" name="realTotal" id="realTotal"  value="" />
 	<tbody id="tbodyId">
 		
 		<!-- <tr ng-repeat="d in pagePara|limitTo:1" >
@@ -231,6 +235,3 @@ $(function(){
 		<button type="button" class="btn btn-success" name="backid" id="backid" ng-click="backMain();">返回</button>
 	</div>
 </table>
-<script>
-	
-</script>

@@ -3,6 +3,12 @@
 $(function(){
 	$('#save').click(function (){
 		
+		if (name.length == 0) {
+			alert("名称不能为空.");
+			
+			return false;
+		}
+		
 			$.ajax({url:"/standards/add",
 				type:'POST',
 				data: JSON.stringify({name:$("#name").val(),year:$("#year").val(),area:$("#area").val(),property:$("#property").val()}),

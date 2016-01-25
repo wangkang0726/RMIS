@@ -53,8 +53,6 @@ public class ProjectController {
 		return  standardRepository.findOne(standardId);
 	
 	}
-	
-	
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public Project updateProject(@RequestBody Project entity, @PathVariable Integer id) {

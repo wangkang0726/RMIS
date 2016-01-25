@@ -19,7 +19,7 @@ public class ProjectItem {
 	private Integer projectId;
 	@Column
 	private Double amount; // 损失数量
-	@Column
+	@Column(name="reportedLoss",scale=2)
 	private Double reportedLoss; // 报损金额
 	@Column
 	private Double realPrice; // 实际损失金额

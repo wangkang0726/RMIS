@@ -51,6 +51,10 @@ $(function(){
 	
 });
 
+function download(){
+    var url="/projectitemexcel/export";
+    window.open(url);
+};
 </script>
 <table>
   	<tr>
@@ -68,7 +72,8 @@ $(function(){
 </table> 
 	<div align="center">
 		<button type="submit" class="btn btn-primary" type="button" id="update">保存</button>
-		<button type="button" class="btn btn-success" name="backid" id="backid" ng-click="backMain();">返回列表</button>
+		<button type="button" class="btn btn-success" name="backid" id="backid" ng-click="backMain();">返回</button>
+		<button type="button" class="btn btn-success" id="excel" onclick="download()">导出Excel</button>
 	</div>
 	<table class="table table-bordered table-sm" id="d">
 			<thead class="thead-inverse">
@@ -107,8 +112,10 @@ $(function(){
 			//console.log(data);
 			var data = eval(data);
 			//console.log(data.amount);
+			
 			for(var i = 0; i<data.length; i++){
 					//console.log(data[i].standard.name);
+				 
 					data[i].standard.standardItem[i].price = data[i].standard.standardItem[i].price ==null?"":data[i].standard.standardItem[i].price;
 					data[i].reportedLoss = data[i].reportedLoss == null?"":data[i].reportedLoss;
 					data[i].amount = data[i].amount == null?"":data[i].amount;
@@ -186,5 +193,44 @@ $(function(){
 			
 		}); 
 	}); 
+	 
+	
+		
+		
+	 function formatNum(data){
+		 var newStr = "";
+		 var count = 0;
+		  
+		 if(data.indexOf(".")==-1){
+		    for(var i=data.length-1;i>=0;i--){
+			  if(count % 3 == 0 && count != 0){
+			    newStr = data.charAt(i) + "," + newStr;
+			  }else{
+			    newStr = data.charAt(i) + newStr;
+			  }
+		  count++;
+		    }
+		    data = newStr + ".00"; //自动补小数点后两位
+		    console.log(data)
+		 }else{
+		    for(var i = data.indexOf(".")-1;i>=0;i--){
+				  if(count % 3 == 0 && count != 0){
+				    newStr = data.charAt(i) + "," + newStr;
+				  }else{
+				    newStr = data.charAt(i) + newStr; //逐个字符相接起来
+				  }
+		  	count++;
+		    }
+		    data = newStr + (data + "00").substr((data + "00").indexOf("."),3);
+		    console.log(data)
+		  }
+	 }
+		  
+	/* 	 formatNum('13213.24'); //输出13,213.34
+		 formatNum('132134.2');  //输出132,134.20
+		 formatNum('132134');  //输出132,134.00
+		 formatNum('132134.236');  //输出132,134.23  
+	*/
+
 </script>
 	
