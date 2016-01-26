@@ -3,6 +3,7 @@ package com.kunlunrisk.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ public class ProjectController {
 	private ItemRepository itemRepository;
 	@Autowired
 	private StandardRepository standardRepository;
+
 	@Autowired
 	@RequestMapping(method = RequestMethod.GET)
 	public List<Project> findProjects() {
@@ -48,16 +50,16 @@ public class ProjectController {
 		List<Standard> list = standardRepository.findAll();
 		return list;
 	}
-	@RequestMapping(value ="/getData/{standardId}", method = RequestMethod.GET)
-	public Standard getStandardData(@PathVariable Integer standardId){
-		return  standardRepository.findOne(standardId);
-	
+
+	@RequestMapping(value = "/getData/{standardId}", method = RequestMethod.GET)
+	public Standard getStandardData(@PathVariable Integer standardId) {
+		return standardRepository.findOne(standardId);
+
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public Project updateProject(@RequestBody Project entity, @PathVariable Integer id) {
 		entity.setId(id);
-		
 		return projectRepository.saveAndFlush(entity);
 	}
 

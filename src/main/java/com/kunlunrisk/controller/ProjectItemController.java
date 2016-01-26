@@ -49,10 +49,10 @@ public class ProjectItemController {
 	
 	//获得项目核算编辑时的值
 	@RequestMapping(value = "/find/{projectId}", method = RequestMethod.GET)
-	public List findProjectItems(@PathVariable Integer projectId, ModelAndView m) {
+	public List<ProjectItem> findProjectItems(@PathVariable Integer projectId, ModelAndView m) {
 		m.addObject("projectId", projectId);
 		projectItemRepository.findAll();
-		List a = new ArrayList();
+		List<ProjectItem> a = new ArrayList<ProjectItem>();
 		List<ProjectItem> list  = projectItemRepository.findAll();
 		for (ProjectItem projectItem : list) {
 			if(projectItem.getProjectId() == projectId){
