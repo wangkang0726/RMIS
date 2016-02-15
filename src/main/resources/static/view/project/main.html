@@ -1,4 +1,14 @@
 <meta charset="UTF-8">
+<script>
+	function getSon() {
+		//window.open ('son.html', '窗口名称', 'height=300, width=400, top=400, left=800, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no')
+		var scope = angular.element($("#mainCtrl")).scope()
+		scope.goAdd('project/son.html', {});
+		scope.$apply();
+		
+	}
+</script>
+
 <table class="table table-bordered table-sm">
 	<tr>
 		<td>公估项目名称：</td>
@@ -16,7 +26,7 @@
 <div align="center">
 	<button type="submit" class="btn btn-primary" type="button">查询</button>
 	<button type="submit" class="btn btn-primary" type="button">清空</button>
-	<button type="button" class="btn btn-success" id="newNav" onclick="getData()">添加新项目</button>
+	<button type="button" class="btn btn-success" id="newNav" onclick="getSon()">添加新项目</button>
 </div>
 
 <table class="table table-bordered table-sm" id="dataTable">
